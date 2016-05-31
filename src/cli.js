@@ -1,5 +1,7 @@
-import versionParser from './utils/versionParser'
 import program from 'commander'
+
+import versionParser from './utils/versionParser'
+import jwtInterface from './jwt/interface'
 
 function setupCLI(cli) {
   cli.usage('[options] <config file>');
@@ -12,7 +14,11 @@ function addConfigCommand(cli) {
 }
 
 function addJwtCommand(cli) {
-  cli.command('jwt');
+  cli.command('jwt [refresh]')
+    .option('-k, --key <key>', "The Auth0 domain key.")
+    .option('-s, --secret <secret>', "The Auth0 domain secret.")
+    .action(jwtInterface);
+
   return cli;
 }
 

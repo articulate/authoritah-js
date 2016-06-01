@@ -14,7 +14,7 @@ function addConfigCommand(cli) {
 }
 
 function addJwtCommand(cli) {
-  cli.command('jwt [refresh]')
+  cli.command('jwt')
     .option('-k, --key <key>', "The Auth0 domain key.")
     .option('-s, --secret <secret>', "The Auth0 domain secret.")
     .action(jwtInterface);

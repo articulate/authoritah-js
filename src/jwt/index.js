@@ -1,9 +1,10 @@
-import generateJID from './generateJID'
+import loadConfig from '../utils/loadConfig'
+import transformParams from './transformParams'
 import generateJWT from './generateJWT'
 
-export default function index(args) {
-  return Promise.resolve(args)
-    .then(generateJID)
+export default function index(options) {
+  return loadConfig(options)
+    .then(transformParams)
     .then(generateJWT)
     .then(console.log)
     .catch(console.error)

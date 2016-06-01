@@ -1,13 +1,13 @@
 import crypto from 'crypto'
-import { compose, ifElse, has, identity, assoc } from 'ramda'
+import { compose, ifElse, isNil, prop, identity, assoc } from 'ramda'
 
 const bufferToHexString = buff => buff.toString('hex');
 const randomHex = compose(bufferToHexString, crypto.randomBytes);
 
 const generateJID = ifElse(
-  has('jid'),
-  identity,
-  assoc('jid', randomHex(16))
+  compose(isNil, prop('uid')),
+  assoc('uid', randomHex(16)),
+  identity
 );
 
 export default generateJID;

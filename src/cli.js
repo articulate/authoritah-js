@@ -2,6 +2,7 @@ import program from 'commander'
 
 import versionParser from './utils/versionParser'
 import jwtInterface from './jwt/index'
+import configInterface from './config/index'
 
 function setupCLI(cli) {
   cli.usage('[options] <config file>');
@@ -9,12 +10,22 @@ function setupCLI(cli) {
 }
 
 function addConfigCommand(cli) {
-  cli.command('config');
+  cli.command('config')
+    .arguments('<command> [args...]')
+    .description('Manage Authoritah config variables. ' +
+                 'Available commands:\n' +
+                 '\tshow\n' +
+                 '\tset key=value [key=value...]\n' +
+                 '\tget key [key...]\n' +
+                 '\tremove key [key...]')
+    .action(configInterface);
+
   return cli;
 }
 
 function addJwtCommand(cli) {
   cli.command('jwt')
+    .option('-r, --refresh', "Refresh the token.")
     .option('-k, --key <key>', "The Auth0 domain key.")
     .option('-s, --secret <secret>', "The Auth0 domain secret.")
     .action(jwtInterface);

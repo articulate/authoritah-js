@@ -5,7 +5,8 @@
   "main": "cli.js",
   "scripts": {
     "build": "babel src -d lib",
-    "test": "mocha ./test/"
+    "test": "mocha ./test/",
+    "clean": "rm -r ./lib/"
   },
   "repository": {
     "type": "git",

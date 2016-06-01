@@ -1,7 +1,7 @@
 import program from 'commander'
 
 import versionParser from './utils/versionParser'
-import jwtInterface from './jwt/interface'
+import jwtInterface from './jwt/index'
 
 function setupCLI(cli) {
   cli.usage('[options] <config file>');
@@ -32,7 +32,7 @@ function addApplyCommand(cli) {
   return cli;
 }
 
-export default function cli(args) {
+exports.cli = (args) => {
   const cli = program;
 
   versionParser()

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-var { default: cli  } = require('../lib/cli.js');
-// console.log(cli)
+var { cli } = require('../lib/cli.js');
+
 cli(process.argv);

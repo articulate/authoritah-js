@@ -35,8 +35,11 @@ export default function configManager(path=DEFAULT_FILE) {
       return config[key] || defaultValue;
     },
 
-    remove(key) {
-      delete config[key];
+    remove(...keys) {
+      keys.forEach(key => {
+        delete config[key];
+      });
+
       return _finalize(config);
     },
 

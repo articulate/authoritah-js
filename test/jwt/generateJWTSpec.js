@@ -3,7 +3,7 @@ import generateJWT from '../../src/jwt/generateJWT'
 const managedContext = {
   key: '123',
   secret: '456',
-  jid: '567',
+  uid: '567',
   created_at: 1464799343600
 };
 

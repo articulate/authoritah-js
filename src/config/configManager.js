@@ -7,6 +7,7 @@ function _read(configFile) {
     let raw = fs.readFileSync(configFile);
     return JSON.parse(raw);
   } catch (e) {
+    console.warn(`File ${configFile} not found.`);
     return {};
   }
 }
@@ -22,6 +23,8 @@ export default function configManager(path=DEFAULT_FILE) {
   let config = _read(path);
 
   return {
+    config,
+
     set(key, value) {
       config[key] = value;
 

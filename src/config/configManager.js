@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-const DEFAULT_FILE = "./.authoritah.json";
+const DEFAULT_FILE = ".authoritah.json";
 
 function _read(configFile) {
   try {
@@ -12,10 +12,10 @@ function _read(configFile) {
   }
 }
 
-function _finalize(data, configFile=DEFAULT_FILE) {
+function _finalize(data, configFile) {
   const encoded = JSON.stringify(data, null, 2);
 
-  fs.writeFile(configFile, encoded);
+  fs.writeFileSync(configFile, encoded);
   return data;
 }
 
@@ -28,7 +28,7 @@ export default function configManager(path=DEFAULT_FILE) {
     set(key, value) {
       config[key] = value;
 
-      return _finalize(config);
+      return _finalize(config, path);
     },
 
     get(key, defaultValue=undefined) {
@@ -40,7 +40,7 @@ export default function configManager(path=DEFAULT_FILE) {
         delete config[key];
       });
 
-      return _finalize(config);
+      return _finalize(config, path);
     },
 
     print() {

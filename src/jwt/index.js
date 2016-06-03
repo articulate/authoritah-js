@@ -1,12 +1,15 @@
-import loadConfig from '../utils/loadConfig'
+import loadEnv from '../utils/loadEnv'
 import transformParams from './transformParams'
 import generateJWT from './generateJWT'
+import say from '../utils/say'
 
 export default function index(options) {
-  return loadConfig(options)
+  const { ok, error } = say(options);
+
+  return loadEnv(options)
     .then(transformParams)
     .then(generateJWT)
-    .then(console.log)
-    .catch(console.error)
+    .then(ok)
+    .catch(error)
 }
 

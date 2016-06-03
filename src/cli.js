@@ -5,7 +5,9 @@ import jwtInterface from './jwt/index'
 import configInterface from './config/index'
 
 function setupCLI(cli) {
-  cli.usage('[options] <config file>');
+  cli.usage('[options] <config file>')
+    .option('-C, --no-color', "Disable color output");
+
   return cli;
 }
 

@@ -58,6 +58,4 @@ describe("configManager", () => {
       expect(manager.config).not.to.have.any.keys(['old', 'new']);
     });
   });
-
-
 });

@@ -1,29 +1,32 @@
 import { partial } from 'ramda'
-import loadConfig from '../utils/loadConfig'
+import loadEnv from '../utils/loadEnv'
+import say from '../utils/say'
 
 const configActions = {
-  set(args, config) {
+  set(args, context) {
+    const { config } = context;
+
     args.forEach(setting => {
       let [key, val] = setting.split('=');
       config.set(key, val);
     });
   },
 
-  get(args, config) {
+  get(args, context) {
+    const { config, say: { say } } = context;
+
     if(args.length == 1) {
-      console.log(config.get(args[ 0 ]));
+      say(config.get(args[0]));
     } else {
       args.forEach(key => {
         const value = config.get(key);
-        console.log(`${key}=${value}`);
+        say(`${key}=${value}`);
       });
     }
   },
 
   rm(args, config) {
-    args.forEach(key => {
-      config.remove(key);
-    });
+    config.remove(args);
   },
 
   print(args, config) {
@@ -31,10 +34,11 @@ const configActions = {
   },
 };
 
-export default function index(command, args) {
-  const action = partial(configActions[ command ], [ args ]);
+export default function index(command, args, options) {
+  const action = configActions[command];
+  const { error } = say(options);
 
-  return loadConfig({})
-    .then(context => action(context.config))
-    .catch(console.error);
+  return loadEnv(options)
+    .then(partial(action, args))
+    .catch(error);
 }

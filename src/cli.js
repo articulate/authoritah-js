@@ -12,8 +12,7 @@ function setupCLI(cli) {
 }
 
 function addConfigCommand(cli) {
-  cli.command('config')
-    .arguments('<command> [args...]')
+  cli.command('config <command> [args...]')
     .description('Manage Authoritah config variables. ' +
                  'Available commands:\n' +
                  '\tshow\n' +

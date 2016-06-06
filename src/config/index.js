@@ -39,6 +39,6 @@ export default function index(command, args, options) {
   const { error } = say(options);
 
   return loadEnv(options)
-    .then(partial(action, args))
+    .then(partial(action, [args]))
     .catch(error);
 }

@@ -1,4 +1,4 @@
-import { map, always, compose, ifElse } from 'ramda'
+import { map, always, compose, ifElse, pathOr } from 'ramda'
 import cl from 'cli-color'
 
 const printers = {
@@ -10,7 +10,7 @@ const printers = {
 };
 
 export default function say(options) {
-  const { parent: { color } } = options;
+  const color = pathOr(true, ['parent', 'color'], options);
 
   return map(defn => {
     let [printer, fmt] = defn;

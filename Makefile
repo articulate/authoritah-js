@@ -1,4 +1,4 @@
-.PHONY: watch test clean
+.PHONY: build watch test clean
 
 build:
 	npm run build

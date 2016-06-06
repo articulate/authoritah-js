@@ -3,6 +3,7 @@ import program from 'commander'
 import versionParser from './utils/versionParser'
 import jwtInterface from './jwt/index'
 import configInterface from './config/index'
+import dumpInterface from './dump/index'
 
 function setupCLI(cli) {
   cli.usage('[options] <config file>')
@@ -35,7 +36,11 @@ function addJwtCommand(cli) {
 }
 
 function addDumpCommand(cli) {
-  cli.command('dump');
+  cli.command('dump [filename]')
+    .option('-s, --scripts <./rules>', "Folder path to save the rule scripts", "./rules")
+    .option('-d, --domain <domain>', "Auth0 domain to run against")
+    .action(dumpInterface);
+
   return cli;
 }
 

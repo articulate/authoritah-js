@@ -26,10 +26,13 @@
   },
   "homepage": "https://github.com/articulate/authoritah-js#readme",
   "dependencies": {
+    "auth0": "^2.1.0",
     "cli-color": "^1.1.0",
     "commander": "^2.9.0",
+    "js-yaml": "^3.6.1",
     "jsonwebtoken": "^7.0.0",
-    "ramda": "^0.21.0"
+    "ramda": "^0.21.0",
+    "sinon-chai": "^2.8.0"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",

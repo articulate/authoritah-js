@@ -5,6 +5,7 @@ const ATTRS = [
   'stage',
   'script',
   'name',
+  'id',
 ];
 
 

@@ -4,6 +4,7 @@ import versionParser from './utils/versionParser'
 import jwtInterface from './jwt/index'
 import configInterface from './config/index'
 import dumpInterface from './dump/index'
+import applyInterface from './apply/index'
 
 function setupCLI(cli) {
   cli.usage('[options] <config file>')
@@ -45,7 +46,10 @@ function addDumpCommand(cli) {
 }
 
 function addApplyCommand(cli) {
-  cli.command('apply');
+  cli.command('apply [rules file]')
+    .option('-d, --domain <domain>', "Auth0 domain to run against")
+    .action(applyInterface);
+
   return cli;
 }
 

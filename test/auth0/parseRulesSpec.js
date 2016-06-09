@@ -9,7 +9,7 @@ describe("parseRules", () => {
   });
 
   it('fetches expected fields', () => {
-    expect(parsed[0]).to.have.all.keys('name', 'uuid', 'script', 'stage', 'enabled');
+    expect(parsed[0]).to.have.all.keys('id', 'name', 'uuid', 'script', 'stage', 'enabled');
   });
 
   context("name and uuid", () => {

@@ -1,7 +1,13 @@
-import { map, pick } from 'ramda'
+import R from 'ramda'
+import prepareRule from './prepareRule'
 
-export default function addRules(context) {
-  const { client, changes } = context;
+export default function updateRules(context) {
+  const { client, changes, say: { notice } } = context;
 
-  return Promise.all(map(client.rules.update, adds));
+  const print = (id) => notice('Updated rule ', id);
+  const update = (rule) => client.rules.update(R.pick(['id'], rule), prepareRule('update')(rule));
+  const updateRule = R.composeP(print, R.prop('id'), update);
+
+  return Promise.all(R.map(updateRule, changes))
+    .then(_ => context);
 }

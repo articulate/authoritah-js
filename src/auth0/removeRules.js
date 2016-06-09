@@ -1,9 +1,12 @@
-import { map, pick } from 'ramda'
+import R from 'ramda'
 
 export default function removeRules(context) {
-  const { client, removes } = context;
+  const { client, removes, say: { warn } } = context;
 
-  const removeRule = compose(client.rules.delete, pick('id'));
+  const print = (id) => warn(`Removed rule ${id}`);
+  const remove = (id) => { client.rules.delete({id}); return id; };
+  const removeRule = R.compose(print, remove, R.prop('id'));
 
-  return Promise.all(map(removeRule, removes));
+  return Promise.all(R.map(removeRule, removes))
+    .then(_ => context);
 }

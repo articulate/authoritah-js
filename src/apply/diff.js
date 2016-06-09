@@ -1,4 +1,4 @@
-import { intersectionWith, differenceWith, eqProps, both, not, equals, compose, pick, mergeAll } from 'ramda'
+import R from 'ramda'
 
 const COMPARE_FIELDS = [
   'script',
@@ -7,23 +7,29 @@ const COMPARE_FIELDS = [
   'name',
 ]
 
-const select = pick(COMPARE_FIELDS);
-const selectiveEquals = (lhs, rhs) => equals(select(lhs), select(rhs));
-const isChanged = compose(not, selectiveEquals);
-const sameRule = eqProps('uuid');
+import clc from 'cli-color'
+import { inspect } from 'util'
 
-const changed = intersectionWith(both(sameRule, isChanged));
-const difference = differenceWith(sameRule);
+const selector = R.pick(COMPARE_FIELDS);
+const selectiveEquals = (lhs, rhs) => R.equals(selector(lhs), selector(rhs));
+const allExist = (lhs, rhs) => R.and(lhs, rhs);
+const isChanged = R.both(allExist, R.complement(selectiveEquals));
+
+const group = R.compose(R.groupBy(R.prop('uuid')), R.concat);
+const findChanges =  R.filter(R.apply(isChanged));
+const difference = R.differenceWith(R.eqProps('uuid'));
 
 export default function diff(context) {
-  const { manifest, rules } = context;
+  const { manifest, rules, say: { ok } } = context;
+  const changes = R.compose(R.values, R.map(R.mergeAll), findChanges, group)(rules, manifest);
 
-  const changes = changed(rules, manifest);
-  const removes = difference(rules, manifest);
-  const adds = difference(manifest, rules);
+  const diff = {
+    changes,
+    removes: difference(rules, manifest),
+    adds: difference(manifest, rules)
+  };
 
-  return mergeAll([
-                    { changes, removes, adds },
-                    context
-                  ]);
+  if(R.all(R.isEmpty, R.values(diff))) { ok("No changes to apply!"); }
+
+  return R.merge(diff, context);
 }

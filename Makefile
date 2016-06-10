@@ -11,3 +11,6 @@ watch:
 
 clean:
 	npm run clean
+
+release:
+	npm publish

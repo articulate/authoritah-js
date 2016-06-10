@@ -19,7 +19,7 @@
     "management",
     "cli"
   ],
-  "author": "Luke van der Hoeven <hi@plukevdh.me>",
+  "author": "Luke van der Hoeven <plukevdh@articulate.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/articulate/authoritah-js/issues"

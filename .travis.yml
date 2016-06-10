@@ -1,10 +1,17 @@
 language: node_js
 node_js:
-  - "6"
-  - "5.11"
-  - "0.10"
+- '6'
+- '5.11'
+- '0.10'
 matrix:
   allow_failures:
-    - node_js: "0.10"
-    - node_js: "5.11"
-
+  - node_js: '0.10'
+  - node_js: '5.11'
+deploy:
+  provider: npm
+  email: hi@plukevdh.me
+  api_key:
+    secure: i6OjcUTIaz9lw0hDlx90ph7nidaaJmONeGqTgn5gjOq39dbT1HOYBJfHRMGyodm+1UyC+6/1Gu/pKp9V7kCTGnSxsCqngpfCbDa89mlO6eh0y+jNkj/x9pvrJe/gdwfBRbHeV5qfBtm1RccjfLv3QLfPhQsLJREe8WJU9ZS6PIKlO6sXxMTsGl2HCS9GiUekuGy3n0Gnd2fMOxGr86OnHwdojWUaDi5wVBmK9MUTBknLJagqLzYJAg8THkOx+yXkr9STJo4dowjmVKcyR5A4im+jCECBuI02fQcqpnKpC4dQzXpPM/y+rHmGiZJ1TllYfW7dI/3wlW9K3ihv9JlCVwtLiKHeRgw5fCB8KOlCpPSoeoi1Dgs8KRxLBAF472nyGyQgEp2SEvrg9rohaLNwbPQAyZuhPCQSOkz/zZYlLJk23xklWMGRaEttBhif3Ns0bakVwTdCAXebk7U9vJKCPFbjOnTHMC3TuAXmp5z6a2QxyOJkP0qTqOxjUg5SD0Y9BdsENwghAudP5gw0sfZnsUC7XYEAFOk+Qe9k36Q20hddOfhDn/x5leTcza73BRAI41DBeLjhFx4vhJSMYT3mtRqclZ4ckKycNzmzNAPJQjtsad6evBHNB6NWJD9Z97XBt8pP4Ph7nyyYmH4OpB1lw4qlaV1gmnL3Mf3Hi+Wu0OM=
+  on:
+    tags: true
+    repo: articulate/authoritah-js

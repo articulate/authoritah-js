@@ -68,7 +68,7 @@ exports.cli = (args) => {
   const cli = program;
 
   versionParser()
-    .then(version => cli.version(version))
+    .then(cli.version.bind(cli))
     .then(setupCLI)
     .then(addSetupCommand)
     .then(addConfigCommand)

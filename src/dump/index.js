@@ -6,8 +6,11 @@ import fetchRules from '../auth0/fetchRules'
 import saveRules from './saveRules'
 
 export default function index(filePath, options) {
+  const { format } = options;
   const { error, ok } = say(options);
-  const filename = filePath ? filePath : "rules.yml";
+
+  const ext = format == "json" ? "json" : "yml"
+  const filename = filePath ? filePath : `rules.${ext}`;
 
   return loadEnv(options)
     .then(setupClient)

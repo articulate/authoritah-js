@@ -40,6 +40,7 @@ function addDumpCommand(cli) {
   cli.command('dump [filename]')
     .option('-s, --scripts <./rules>', "Folder path to save the rule scripts", "./rules")
     .option('-d, --domain <domain>', "Auth0 domain to run against")
+    .option('-F --format <format>', "Format to output rules.", "yaml")
     .action(dumpInterface);
 
   return cli;

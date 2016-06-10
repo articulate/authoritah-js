@@ -1,6 +1,6 @@
 import fs from 'fs'
 import yaml from 'js-yaml'
-import { assoc, dissoc, compose, map, partial } from 'ramda'
+import R from 'ramda'
 
 const scriptName = (name) => { return name.toLowerCase().replace(/\s/g, "_") }
 
@@ -9,7 +9,7 @@ function saveScript(dir, rule) {
   const path = `${dir}/${scriptName(name)}.js`;
 
   fs.writeFileSync(path, script);
-  return compose(assoc('script_file', path), dissoc('script'))(rule);
+  return R.compose(R.assoc('script_file', path), R.dissoc('script'))(rule);
 }
 
 function ensureScriptDir(dir) {
@@ -20,15 +20,18 @@ function ensureScriptDir(dir) {
   }
 }
 
-export default function saveRules(filename) {
-  const writeYaml = compose(partial(fs.writeFileSync, [filename]), yaml.dump);
+const formatter = R.ifElse(R.equals('json'),
+                           R.always(R.curry(JSON.stringify)(R.__, null, 2)),
+                           R.always(yaml.dump));
 
+export default function saveRules(filename) {
   return function(context) {
-    const { rules, options: { scripts } } = context;
-    const saveTo = partial(saveScript, [scripts]);
+    const { rules, options: { format, scripts } } = context;
+    const saveTo = R.partial(saveScript, [scripts]);
+    const write = R.compose(R.partial(fs.writeFileSync, [filename]), formatter(format));
 
     ensureScriptDir(scripts);
 
-    return compose(writeYaml, map(saveTo))(rules);
+    return R.compose(write, R.map(saveTo))(rules);
   }
 }

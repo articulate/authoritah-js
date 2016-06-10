@@ -10,7 +10,8 @@ function loadScript(rule) {
 }
 
 export default function loadManifest(filename) {
-  const manifest = compose(yaml.load, fs.readFileSync)(filename);
+  const parser = filename.endsWith("json") ? JSON.parse : yaml.load;
+  const manifest = compose(parser, fs.readFileSync)(filename);
 
   return function(context) {
     return assoc('manifest', map(loadScript, manifest), context);

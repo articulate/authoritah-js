@@ -2,12 +2,14 @@
   "name": "authoritah",
   "version": "0.0.1",
   "description": "CLI tooling for Auth0 instance management",
-  "main": "cli.js",
   "scripts": {
     "build": "babel src -d lib -s",
     "watch": "babel src -d lib -s -w",
     "test": "mocha ./test/",
     "clean": "rm -r ./lib/"
+  },
+  "bin": {
+    "authoritah": "./bin/authoritah"
   },
   "repository": {
     "type": "git",

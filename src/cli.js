@@ -5,6 +5,7 @@ import jwtInterface from './jwt/index'
 import configInterface from './config/index'
 import dumpInterface from './dump/index'
 import applyInterface from './apply/index'
+import setupInterface from './setup/index'
 
 function setupCLI(cli) {
   cli.usage('[options] <config file>')
@@ -12,6 +13,15 @@ function setupCLI(cli) {
 
   return cli;
 }
+
+function addSetupCommand(cli) {
+  cli.command('setup')
+    .description('Setup authoritah for use with your Auth0 instance.')
+    .action(setupInterface);
+
+  return cli;
+}
+
 
 function addConfigCommand(cli) {
   cli.command('config <command> [args...]')
@@ -60,6 +70,7 @@ exports.cli = (args) => {
   versionParser()
     .then(version => cli.version(version))
     .then(setupCLI)
+    .then(addSetupCommand)
     .then(addConfigCommand)
     .then(addJwtCommand)
     .then(addDumpCommand)

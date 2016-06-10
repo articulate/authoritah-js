@@ -61,7 +61,7 @@ describe("configManager", () => {
 
   context('setting', () => {
     after(() => {
-      manager.remove("key", 'keep');
+      manager.remove("key", 'keep', 'happ', 'def');
     });
 
     it('can set single value', () => {
@@ -76,7 +76,14 @@ describe("configManager", () => {
     it('sets value if not found', () => {
       expect(manager.getset('keep', 'valuered')).to.equal('valuered');
       expect(manager.get('keep')).to.equal('valuered');
-    })
+    });
+
+    it('can set multiple values from an object', () => {
+      const vals = {happ: "instance", def: "jam"};
+      manager.sets(vals);
+
+      expect(manager.gets('happ', 'def')).to.eql(vals);
+    });
   });
 
   context('remove', () => {

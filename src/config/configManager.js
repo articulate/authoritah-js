@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { defaultTo, pick, partial, map, keys, mergeWith, isNil } from 'ramda'
+import R from 'ramda'
 
 const DEFAULT_FILE = ".authoritah.json";
 
@@ -8,7 +8,7 @@ function _read(configFile) {
     let raw = fs.readFileSync(configFile);
     return JSON.parse(raw);
   } catch(e) {
-    console.warn(`File ${configFile} not found.`);
+    //console.warn(`File ${configFile} not found.`);
     return {};
   }
 }
@@ -20,63 +20,59 @@ function _finalize(config, configFile) {
   return config;
 }
 
-function get(config, key, defaultValue = undefined) {
-  return defaultTo(defaultValue, config[key]);
-}
-
-function gets(config, ...keymap) {
-  return pick(keymap, config);
-}
-
-function orGet(config, key, primaryValue) {
-  return defaultTo(config[key], primaryValue);
-}
-
-function getsd(config, defaultMap) {
-  return mergeWith(defaultTo, defaultMap, pick(keys(defaultMap), config));
-}
-
-function print(config) {
-  for(let key in config){
-    console.log(`${key}=${config[key]}`);
-  }
-}
-
 export default function configManager(path = DEFAULT_FILE) {
   let config = _read(path);
 
-  function set(key, value) {
+  const set = (key, value) => {
     config[key] = value;
 
     _finalize(config, path);
     return value;
-  }
-
-  function getset(key, defaultValue) {
-    let value = config[key];
-    if(isNil(value)) { value = set(key, defaultValue); }
-
-    return value;
-  }
-
-  function remove(...keys) {
-    keys.forEach(key => {
-      delete config[key];
-    });
-
-    return _finalize(config, path);
-  }
-
+  };
 
   return {
     config,
     set,
-    remove,
-    getset,
-    get: partial(get, [config]),
-    gets: partial(gets, [config]),
-    getsd: partial(getsd, [config]),
-    orGet: partial(orGet, [config]),
-    print: partial(print, [config]),
+    get(key, defaultValue = undefined) {
+      return R.defaultTo(defaultValue, config[key]);
+    },
+
+    gets(...keymap) {
+      return R.pick(keymap, config);
+    },
+
+    orGet(key, primaryValue) {
+      return R.defaultTo(config[key], primaryValue);
+    },
+
+    getsd(defaultMap) {
+      return R.mergeWith(R.defaultTo, defaultMap, R.pick(R.keys(defaultMap), config));
+    },
+
+    print() {
+      for(let key in config){
+        console.log(`${key}=${config[key]}`);
+      }
+    },
+
+    sets(obj) {
+      config = R.merge(config, obj);
+      return _finalize(config, path);
+    },
+
+    getset(key, defaultValue) {
+      let value = config[key];
+      if(R.isNil(value)) { value = set(key, defaultValue); }
+
+      return value;
+    },
+
+    remove(...keys) {
+      keys.forEach(key => {
+        delete config[key];
+      });
+
+      return _finalize(config, path);
+    }
   }
 }

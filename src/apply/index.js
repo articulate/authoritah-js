@@ -10,7 +10,7 @@ import removeRules from '../auth0/removeRules'
 import diff from './diff'
 
 export default function index(filename='./rules.yml', options) {
-  const { ok, error, say: sayHey } = say(options);
+  const { error } = say(options);
 
   return loadEnv(options)
     .then(loadManifest(filename))

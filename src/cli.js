@@ -50,6 +50,8 @@ function addDumpCommand(cli) {
   cli.command('dump [filename]')
     .option('-s, --scripts <./rules>', "Folder path to save the rule scripts", "./rules")
     .option('-d, --domain <domain>', "Auth0 domain to run against")
+    .option('-k, --key <key>', "The Auth0 domain key.")
+    .option('-s, --secret <secret>', "The Auth0 domain secret.")
     .option('-F --format <format>', "Format to output rules.", "yaml")
     .action(dumpInterface);
 
@@ -59,6 +61,8 @@ function addDumpCommand(cli) {
 function addApplyCommand(cli) {
   cli.command('apply [rules file]')
     .option('-d, --domain <domain>', "Auth0 domain to run against")
+    .option('-k, --key <key>', "The Auth0 domain key.")
+    .option('-s, --secret <secret>', "The Auth0 domain secret.")
     .action(applyInterface);
 
   return cli;

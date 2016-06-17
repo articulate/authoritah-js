@@ -1,4 +1,4 @@
-import { map, always, compose, ifElse, pathOr, identity, is, join } from 'ramda'
+import R from 'ramda'
 import cl from 'cli-color'
 import { inspect } from 'util'
 
@@ -11,17 +11,17 @@ const printers = {
 };
 
 const colorlessInspector = (obj) => inspect(obj, { colors: false });
-const doInspect = ifElse(is(String), identity, colorlessInspector);
-const hydrate = (...msg) => compose(join(''), map(doInspect))(msg);
+const doInspect = R.ifElse(R.is(String), R.identity, colorlessInspector);
+const hydrate = (...msg) => R.compose(R.join(''), R.map(doInspect))(msg);
 
 export default function say(options) {
-  const color = pathOr(true, ['parent', 'color'], options);
+  const color = R.pathOr(true, ['parent', 'color'], options);
 
-  return map(([printer, fmt]) => {
+  return R.map(([printer, fmt]) => {
     const boundPrint = printer.bind(console);
 
     if(!fmt) { return boundPrint; }
 
-    return color ? compose(boundPrint, fmt, hydrate) : boundPrint;
+    return color ? R.compose(boundPrint, fmt, hydrate) : boundPrint;
   }, printers);
 }

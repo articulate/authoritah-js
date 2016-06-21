@@ -1,7 +1,9 @@
 node_modules/
-rules/
-rules.json
-auth0.yml
 
+# Testing files
+rule_scripts/
+connection_scripts/
+auth0.yml
+auth0.json
 .authoritah.json
 creds.txt

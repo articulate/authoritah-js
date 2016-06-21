@@ -11,6 +11,7 @@
   "bin": {
     "authoritah": "./bin/authoritah"
   },
+  "preferGlobal": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/articulate/authoritah-js.git"

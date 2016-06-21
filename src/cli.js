@@ -48,7 +48,8 @@ function addJwtCommand(cli) {
 
 function addDumpCommand(cli) {
   cli.command('dump [filename]')
-    .option('-s, --scripts <./rules>', "Folder path to save the rule scripts", "./rules")
+    .option('-r, --rule-scripts <./rule_scripts>', "Folder path to save the rule scripts", "./rule_scripts")
+    .option('-c, --connection-scripts <./connection_scripts>', "Folder path to save the connection scripts", "./connection_scripts")
     .option('-d, --domain <domain>', "Auth0 domain to run against")
     .option('-k, --key <key>', "The Auth0 domain key.")
     .option('-s, --secret <secret>', "The Auth0 domain secret.")

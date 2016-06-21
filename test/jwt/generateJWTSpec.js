@@ -3,6 +3,10 @@ import generateJWT from '../../src/jwt/generateJWT'
 import configManager from '../../src/config/configManager'
 
 const config = configManager('./test/fixtures/jwt.json');
+const setConfig = () => {
+  config.set('jwt.createdAt', 1465228230036);
+  config.set('jwt.uid', '123');
+};
 
 const ctx = {
   config,
@@ -12,13 +16,14 @@ const ctx = {
   }
 };
 
-const jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMjMiLCJzY29wZXMiOnsicnVsZXMiOnsiYWN0aW9ucyI6WyJyZWFkIiwidXBkYXRlIiwiZGVsZXRlIiwiY3JlYXRlIl19fSwiaWF0IjoxNDY1MjI4MjMwMDM2LCJqdGkiOiIxMjMifQ._Fg1RCxrLrMula3DvXZOl4Puq4IF5qRLqSDa_dFjmx8';
+const jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMjMiLCJzY29wZXMiOnsicnVsZXMiOnsiYWN0aW9ucyI6WyJyZWFkIiwidXBkYXRlIiwiZGVsZXRlIiwiY3JlYXRlIl19LCJjb25uZWN0aW9ucyI6eyJhY3Rpb25zIjpbInJlYWQiLCJ1cGRhdGUiXX19LCJpYXQiOjE0NjUyMjgyMzAwMzYsImp0aSI6IjEyMyJ9.jTRg4Iul4e2SqG0Dn1PILpMwrZ7vvsOLCZH188xgCag';
 
 describe("generateJWT", () => {
-  beforeEach(() => {
-    config.set('jwt.createdAt', 1465228230036);
-    config.set('jwt.uid', '123');
-  });
+  beforeEach(setConfig);
+
+  // restore before next test run
+  // avoids changing values for source control
+  after(setConfig);
 
   it('can generate a repeatable JWT', () => {
     const result = generateJWT(ctx);

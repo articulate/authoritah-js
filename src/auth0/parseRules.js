@@ -1,4 +1,5 @@
-import { merge, pick, map, compose, assoc } from 'ramda';
+import R from 'ramda';
+import transformName from '../utils/transformUuidName'
 
 const ATTRS = [
   'enabled',
@@ -8,20 +9,9 @@ const ATTRS = [
   'id',
 ];
 
-
-const extractName = (uuidName) => {
-  const [uuid, ...nameParts] = uuidName.split(' ');
-  return { uuid, name: nameParts.join(' ') };
-};
-
-const transform = (attrs) => {
-  const { name } = attrs;
-  return merge(attrs, extractName(name));
-};
-
 export default function parseRules(context) {
   const { rules } = context;
-  const parsed = map(compose(transform, pick(ATTRS)), rules);
+  const parsed = R.map(R.compose(transformName, R.pick(ATTRS)), rules);
 
-  return assoc('rules', parsed, context);
+  return R.assoc('rules', parsed, context);
 }

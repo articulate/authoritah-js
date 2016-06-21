@@ -9,7 +9,13 @@ const DEFAULT_SCOPE = {
       "delete",
       "create"
     ]
-  }
+  },
+  connections: {
+    actions: [
+      "read",
+      "update",
+    ]
+  },
 };
 
 export default function generateJWT(context) {

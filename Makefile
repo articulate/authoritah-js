@@ -1,5 +1,3 @@
-VERSION:= $(shell ./bin/authoritah --version)
-
 .PHONY: build watch test clean
 
 build:
@@ -15,6 +13,8 @@ clean:
 	npm run clean
 
 release:
+	VERSION:= $(shell ./bin/authoritah --version)
+
 	git push origin master
 	git tag $(VERSION)
 	git push origin tag $(VERSION)

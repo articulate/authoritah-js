@@ -1,7 +1,7 @@
 node_modules/
 rules/
 rules.json
-rules.yml
+auth0.yml
 
 .authoritah.json
 creds.txt

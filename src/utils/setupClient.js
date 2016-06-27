@@ -7,7 +7,7 @@ const { ManagementClient } = auth0;
 export default function(context) {
   const { config, options: { env }, say: { error } } = context;
   const token = generateJwt(context);
-  const auth0Domain = config.get('auth0.env', env);
+  const auth0Domain = config.orGet('auth0.env', env);
 
   if(!auth0Domain) {
     error("Auth0 environment required. Use the --env flag or set in the config file.");

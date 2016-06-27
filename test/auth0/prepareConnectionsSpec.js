@@ -10,6 +10,6 @@ describe("prepareRule", () => {
   });
 
   it('combines uuid and name', () => {
-    expect(result.name).to.equal(`${conn.uuid} ${conn.name}`);
+    expect(result.name).to.equal(`${conn.uuid}-${conn.name}`);
   });
 });

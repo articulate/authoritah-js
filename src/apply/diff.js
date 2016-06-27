@@ -1,35 +1,36 @@
 import R from 'ramda'
 
-const COMPARE_FIELDS = [
-  'script',
-  'stage',
-  'enabled',
-  'name',
-]
+const COMPARE_FIELDS = {
+  rules: R.pick(['script', 'stage', 'enabled', 'name']),
+  connections: R.pick(['name, options'])
+};
 
-import clc from 'cli-color'
-import { inspect } from 'util'
+function selectiveEquals(field) {
+  const selector = COMPARE_FIELDS[field];
+  return function(lhs, rhs) {
+    return R.equals(selector(lhs), selector(rhs));
+  }
+}
 
-const selector = R.pick(COMPARE_FIELDS);
-const selectiveEquals = (lhs, rhs) => R.equals(selector(lhs), selector(rhs));
-const allExist = (lhs, rhs) => R.and(lhs, rhs);
-const isChanged = R.both(allExist, R.complement(selectiveEquals));
+const bothExist = (lhs, rhs) => R.and(lhs, rhs);
+const isChanged = (field) => R.both(bothExist, R.complement(selectiveEquals(field)));
 
-const group = R.compose(R.groupBy(R.prop('uuid')), R.concat);
-const findChanges =  R.filter(R.apply(isChanged));
+const groupByUuid = R.compose(R.groupBy(R.prop('uuid')), R.concat);
+const findChanges = (field) => R.filter(R.apply(isChanged(field)));
 const difference = R.differenceWith(R.eqProps('uuid'));
+const changedIntersection = (field) => R.compose(R.values, R.map(R.mergeAll), findChanges(field), groupByUuid);
 
-export default function diff(context) {
-  const { manifest, rules, say: { ok } } = context;
-  const changes = R.compose(R.values, R.map(R.mergeAll), findChanges, group)(rules, manifest);
+function diff(field, context) {
+  const { manifest: { [field]: local }, [field]: server, say: { ok } } = context;
 
   const diff = {
-    changes,
-    removes: difference(rules, manifest),
-    adds: difference(manifest, rules)
+    changes: changedIntersection(field)(server, local),
+    removes: difference(server, local),
+    adds: difference(local, server)
   };
 
-  if(R.all(R.isEmpty, R.values(diff))) { ok("No changes to apply!"); }
-
-  return R.merge(diff, context);
+  if(R.all(R.isEmpty, R.values(diff))) { ok(`No changes to apply for ${field}!`); }
+  return R.assocPath(['diff', field], diff, context);
 }
+
+export default R.curry(diff);

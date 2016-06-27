@@ -6,7 +6,7 @@ describe("parseConnections", () => {
 
   context('transforms connections from API to the manifest representation', () => {
     it('extracts needed fields', () => {
-      expect(result[0]).to.have.all.keys(["id", "name", "uuid", 'options']);
+      expect(result[0]).to.have.all.keys(["id", "name", "uuid", 'options', 'strategy']);
     });
 
     it('splits uuid from name', () => {

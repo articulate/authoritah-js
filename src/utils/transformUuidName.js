@@ -1,8 +1,21 @@
 import R from 'ramda'
+import uuidgen from 'node-uuid'
 
-export default function transformUuidName(attrs) {
+const uuidMatcher = /([\w]{8}(?:-[\w]{4}){3}-[\w]{12})?\s?(.+)/
+
+export function extractUuid(attrs) {
   const { name } = attrs;
-  const [uuid, ...nameParts] = name.split(' ');
+  let [_original, uuid, namePart] = R.match(uuidMatcher, name);
 
-  return R.merge(attrs, { uuid, name: nameParts.join(' ') });
-};
+  if(R.isNil(uuid)) { uuid = uuidgen.v4(); }
+
+  return R.merge(attrs, { uuid, name: namePart });
+}
+
+export function combineUuid(attrs) {
+  let { name, uuid } = attrs;
+
+  if(R.isNil(uuid)) { uuid = uuidgen.v4(); }
+
+  return R.compose(R.assoc('name', `${uuid} ${name}`), R.dissoc('uuid'))(attrs);
+}

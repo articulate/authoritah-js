@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/auth0/prepareConnection.js"],"names":[],"mappings":";;;;;;AAAA;;;;AACA;;;;AAEA,IAAM,kDAAN;;kBAEe,iB","file":"prepareConnection.js","sourcesContent":["import R from 'ramda'\nimport { combineUuid } from '../utils/transformUuidName'\n\nconst prepareConnection = combineUuid;\n\nexport default prepareConnection;\n"]}

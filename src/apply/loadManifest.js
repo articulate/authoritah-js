@@ -1,19 +1,20 @@
-import yaml from 'js-yaml'
 import fs from 'fs'
-import { compose, assoc, dissoc, map } from 'ramda'
+import R from 'ramda'
+import yaml from 'js-yaml'
+import loadScript from '../utils/loadScript'
 
-function loadScript(rule) {
-  const { script_file } = rule;
-  const script = fs.readFileSync(script_file).toString();
+// Connections require a bit of manipulation to work with the `loadScript` function expectations
+const loadConnectionScripts = R.over(R.lensPath(['options', 'customScripts']),
+  R.mapObjIndexed((_, key, object) => loadScript(key, object)[key]));
 
-  return compose(assoc('script', script), dissoc('script_file'))(rule);
+const transformations = {
+  rules: R.map(loadScript('script')),
+  connections: R.map(loadConnectionScripts),
 }
 
 export default function loadManifest(filename) {
   const parser = filename.endsWith("json") ? JSON.parse : yaml.load;
-  const manifest = compose(parser, fs.readFileSync)(filename);
+  const manifest = R.compose(parser, fs.readFileSync)(filename);
 
-  return function(context) {
-    return assoc('manifest', map(loadScript, manifest), context);
-  }
+  return R.assoc('manifest', R.evolve(transformations, manifest));
 }

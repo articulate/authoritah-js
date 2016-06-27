@@ -1,15 +1,15 @@
 import R from 'ramda'
+import { combineUuid } from '../utils/transformUuidName'
 
-const FIELDS = [
+const filterFields = R.pick([
   'name',
   'script',
   'enabled',
   'stage',
   'order',
-]
+]);
 
-const combineUuidName = (rule) => R.assoc('name', R.props(['uuid', 'name'], rule).join(' '), rule);
-const selectCreate = R.compose(R.pick(FIELDS), combineUuidName);
+const selectCreate = R.compose(filterFields, combineUuid);
 const selectUpdate = R.compose(R.omit(['stage']), selectCreate);
 
 const prepareRule = (type) => R.equals('update', type) ? selectUpdate : selectCreate;

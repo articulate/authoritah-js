@@ -29,16 +29,16 @@ describe("saveScripts", () => {
     const result = saveFn(fn);
 
     it('and returns an updated definition', () => {
-      expect(result).to.eql({ name: "bloop", script_file: "./test/fixtures/saveDir/bloop.js" });
+      expect(result).to.eql({ name: "bloop", script: "./test/fixtures/saveDir/bloop.js" });
     });
 
     it('creates a new file', () => {
-      const stat = fs.statSync(result.script_file);
+      const stat = fs.statSync(result.script);
       expect(stat.isFile()).to.be.true;
     });
 
     it('contains the contents of the script', () => {
-      const content = fs.readFileSync(result.script_file);
+      const content = fs.readFileSync(result.script);
       expect(content.toString()).to.equal(fn.script);
     });
   });

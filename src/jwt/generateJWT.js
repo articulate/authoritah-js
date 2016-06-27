@@ -5,15 +5,22 @@ const DEFAULT_SCOPE = {
   rules: {
     actions: [
       "read",
+      "create",
       "update",
-      "delete",
-      "create"
+      "delete"
+    ]
+  },
+  clients: {
+    actions: [
+      "read"
     ]
   },
   connections: {
     actions: [
       "read",
+      "create",
       "update",
+      "delete"
     ]
   },
 };

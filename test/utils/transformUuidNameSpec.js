@@ -26,7 +26,7 @@ describe("transformations on UUID name", () => {
     it('can generate a uuid if none given', () => {
       const result = combineUuid({name: "Hello World"});
 
-      expect(result.name).to.match(/([\w]{8}(?:-[\w]{4}){3}-[\w]{12}) Hello World/);
+      expect(result.name).to.match(/\w{16} Hello World/);
     });
   });
 });

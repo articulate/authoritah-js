@@ -1,0 +1,39 @@
+[
+  {
+    "enabled_clients": [
+      "789",
+      "987"
+    ],
+    "id": "con_seannery",
+    "name": "27244AB4-9C55-427C-A6D6-796A1C4C52AF google-oauth2",
+    "options": {
+      "email": true,
+      "profile": true,
+      "scope": [
+        "email",
+        "profile"
+      ]
+    },
+    "strategy": "google-oauth2"
+  },
+  {
+    "enabled_clients": [
+      "123",
+      "456"
+    ],
+    "id": "con_nonnery",
+    "name": "4F686A07-2DB8-4941-99C7-86DEB3F4D20C Username-Password-Authentication",
+    "options": {
+      "configuration": {
+        "nanites": "2020",
+        "keys": "castle"
+      },
+      "brute_force_protection": true,
+      "customScripts": {
+        "login": "function login (email, password, callback) {\n  // This script should authenticate a user against the credentials stored in\n  // your database.\n  // It is executed when a user attempts to log in or immediately after signing\n  // up (as a verification that the user was successfully signed up).\n  // The `password` parameter of this function is in plain text. It must be\n  // hashed/salted to match whatever is stored in your database. For example:\n  //     if (bcrypt.compareSync(password, dbPasswordHash)) { ... }\n  //\n  // There are three ways this script can finish:\n  // 1. The user's credentials are valid. The returned user profile should be in\n  // the following format: https://auth0.com/docs/user-profile\n  //     callback(null, profile);\n  // 2. The user's credentials are invalid\n  //     callback(new WrongUsernameOrPasswordError(email, \"my error message\"));\n  // 3. Something went wrong while trying to reach your database\n  //     callback(new Error(\"my error message\"));\n\n  var msg = \"Please implement the Login script for this database connection \"\n      + \"at https://manage.auth0.com/#/connections/database\";\n  return callback(new Error(msg));\n}\n"
+      },
+      "enabledDatabaseCustomization": true
+    },
+    "strategy": "auth0"
+  }
+]

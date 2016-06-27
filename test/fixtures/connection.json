@@ -1,0 +1,9 @@
+{
+  "name": "Username-Password-Authentication",
+  "options": {
+    "customScripts": {
+      "login": "./test/fixtures/dummy_scripts/dummy.js"
+    }
+  },
+  "uuid": "6b83c297-f344-42ea-ae7d-754fbfa672bb"
+}

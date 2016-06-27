@@ -1,0 +1,3 @@
+function canYouDigIt() {
+  return "yes";
+}

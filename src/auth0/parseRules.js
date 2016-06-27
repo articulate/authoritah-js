@@ -1,17 +1,16 @@
 import R from 'ramda';
-import transformName from '../utils/transformUuidName'
+import { extractUuid } from '../utils/transformUuidName'
 
-const ATTRS = [
+const filterAttrs = R.pick([
   'enabled',
   'stage',
   'script',
   'name',
   'id',
-];
+]);
+const transformEach = R.map(R.compose(extractUuid, filterAttrs));
 
 export default function parseRules(context) {
   const { rules } = context;
-  const parsed = R.map(R.compose(transformName, R.pick(ATTRS)), rules);
-
-  return R.assoc('rules', parsed, context);
+  return R.assoc('rules', transformEach(rules), context);
 }

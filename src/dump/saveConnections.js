@@ -1,15 +1,25 @@
 import fs from 'fs'
 import R from 'ramda'
 import saveScripts from '../utils/saveScripts'
+import { expandObject, combineObject } from '../utils/objectManipulation'
 
-const ruleLens = R.lens(R.prop('customScripts'), R.assoc('customScripts'));
-const transformForSave = R.compose(R.values, R.mapObjIndexed((script, name) => ({ name, script })));
-const transform = (saveFn) => R.over(ruleLens, R.compose(R.map(saveFn), transformForSave));
+const scriptPath = ['options', 'customScripts'];
+const ruleLens = R.lens(R.path(scriptPath), R.assocPath(scriptPath));
+
+const transformForSave = (saveFn) => R.over(ruleLens, R.compose(R.map(saveFn), expandObject('name', 'script')));
+const transformForWrite = R.over(ruleLens, combineObject('name', 'script'));
 
 export default function saveConnections(context) {
   const { connections, options: { connectionScripts } } = context;
-  const saveScriptTo = saveScripts(connectionScripts);
 
-  return R.assoc('connections', R.map(transform(saveScriptTo), connections), context);
+  const saveAndWrite = R.map((connection) => {
+    const { name, options: { customScripts }} = connection;
+    if(R.isNil(customScripts)) { return connection; }
+
+    const saveScriptTo = saveScripts(`${connectionScripts}/${name}`);
+    return R.compose(transformForWrite, transformForSave(saveScriptTo))(connection);
+  });
+
+  return R.assoc('connections', saveAndWrite(connections), context);
 }
 

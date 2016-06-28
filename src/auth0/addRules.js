@@ -1,11 +1,11 @@
 import R from 'ramda'
-import prepareRule from './prepareRule'
+import { prepareForCreate } from './prepareRule'
 
 export default function addRules(context) {
   const { client, diff: { rules: { adds } }, say: { ok } } = context;
 
-  const print = (id) => ok('Added rule ', id);
-  const addRule = R.compose(R.composeP(print, R.prop('id'), client.rules.create), prepareRule('create'));
+  const print = ({name}) => ok('Added rule ', name);
+  const addRule = R.compose(R.composeP(print, client.rules.create), prepareForCreate);
 
   return Promise.all(R.map(addRule, adds))
     .then(_ => context);

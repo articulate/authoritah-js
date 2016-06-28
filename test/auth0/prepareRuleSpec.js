@@ -1,13 +1,12 @@
 import fs from 'fs'
-import prepareRule from '../../src/auth0/prepareRule'
+import { prepareForCreate, prepareForUpdate } from '../../src/auth0/prepareRule'
 import rule from '../fixtures/rule.json'
 
 describe("prepareRule", () => {
   const uuidNameTest = (result) => () => expect(result.name).to.equal(`${rule.uuid} ${rule.name}`);
 
   context('create', () => {
-    const prepareFn = prepareRule('create');
-    const result = prepareFn(rule);
+    const result = prepareForCreate(rule);
 
     it('selects fields', () => {
       expect(result).to.have.all.keys(['name', 'script', 'enabled', 'stage', 'order']);
@@ -17,8 +16,7 @@ describe("prepareRule", () => {
   });
 
   context('update', () => {
-    const prepareFn = prepareRule('update');
-    const result = prepareFn(rule);
+    const result = prepareForUpdate(rule);
 
     it('selects fields', () => {
       expect(result).to.have.all.keys(['name', 'script', 'enabled', 'order']);

@@ -20,5 +20,5 @@ export default function index(filename='./auth0.yml', options) {
     .then(diff('rules'))
     .then(diff('connections'))
     .then(applyDiff)
-    .catch(err => error(err.message));
+    .catch(error);
 }

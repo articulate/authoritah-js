@@ -8,6 +8,7 @@ export default function removeRules(context) {
     client.rules.delete({ id });
     return id;
   };
+
   const removeRule = R.compose(print, remove, R.prop('id'));
 
   return Promise.all(R.map(removeRule, removes))

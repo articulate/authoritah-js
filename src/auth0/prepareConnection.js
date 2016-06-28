@@ -1,7 +1,7 @@
 import R from 'ramda'
 import { combineUuid } from '../utils/transformUuidName'
 
-const filterFields = R.omit(['options', 'name', 'strategy'])
+const filterFields = R.pick(['options', 'name', 'strategy', 'enabled_clients'])
 const filterForUpdate = R.pick(['options', 'enabled_clients']);
 
 function joinNameWhitespace(connection) {
@@ -10,8 +10,7 @@ function joinNameWhitespace(connection) {
 }
 
 function prepareConnection(type) {
-  const filter = R.equals('update', type) ? filterForUpdate : filterFields;
-  return R.compose(filter, joinNameWhitespace, combineUuid);
+  return R.equals('update', type) ? filterForUpdate : R.compose(filterFields, joinNameWhitespace, combineUuid);
 }
 
 export default prepareConnection;

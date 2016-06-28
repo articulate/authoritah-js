@@ -9,10 +9,5 @@ const filterFields = R.pick([
   'order',
 ]);
 
-const selectCreate = R.compose(filterFields, combineUuid);
-const selectUpdate = R.compose(R.omit(['stage']), selectCreate);
-
-const prepareRule = (type) => R.equals('update', type) ? selectUpdate : selectCreate;
-
-export default prepareRule;
-
+export const prepareForCreate = R.compose(filterFields, combineUuid);
+export const prepareForUpdate = R.compose(R.omit(['stage']), prepareForCreate);

@@ -1,16 +1,12 @@
 import R from 'ramda'
 import { combineUuid } from '../utils/transformUuidName'
 
-const filterFields = R.pick(['options', 'name', 'strategy', 'enabled_clients'])
-const filterForUpdate = R.pick(['options', 'enabled_clients']);
+const MAX_NAME_SIZE = 18;
+const filterFields = R.pick(['options', 'name', 'strategy', 'enabled_clients']);
+const nameLens = R.lensProp('name');
 
-function joinNameWhitespace(connection) {
-  const { name } = connection;
-  return R.assoc('name', name.replace(/\s/g, '-'), connection);
-}
+const truncateName = R.over(nameLens, R.take(MAX_NAME_SIZE));
+const replaceWhitespace = R.over(nameLens, R.replace(/\s/g, '-'));
 
-function prepareConnection(type) {
-  return R.equals('update', type) ? filterForUpdate : R.compose(filterFields, joinNameWhitespace, combineUuid);
-}
-
-export default prepareConnection;
+export const prepareForUpdate = R.pick(['options', 'enabled_clients']);
+export const prepareForCreate = R.compose(filterFields, replaceWhitespace, combineUuid, truncateName);

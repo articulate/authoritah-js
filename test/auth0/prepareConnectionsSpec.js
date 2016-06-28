@@ -1,22 +1,22 @@
 import fs from 'fs'
-import prepareConnection from '../../src/auth0/prepareConnection'
+import { prepareForCreate, prepareForUpdate } from '../../src/auth0/prepareConnection'
 import conn from '../fixtures/connection.json'
 
-describe("prepareRule", () => {
+describe("prepareConnection", () => {
   context('create', () => {
-    const result = prepareConnection('create')(conn);
+    const result = prepareForCreate(conn);
 
     it('selects fields', () => {
       expect(result).to.have.all.keys(['name', 'options', 'strategy', 'enabled_clients']);
     });
 
-    it('combines uuid and name', () => {
-      expect(result.name).to.equal(`${conn.uuid}-${conn.name}`);
+    it('combines uuid and truncated name', () => {
+      expect(result.name).to.equal(`${conn.uuid}-${conn.name.substring(0,18)}`);
     });
   });
 
   context('update', () => {
-    const result = prepareConnection('update')(conn);
+    const result = prepareForUpdate(conn);
 
     it('selects fields', () => {
       expect(result).to.have.all.keys(['options', 'enabled_clients']);

@@ -1,12 +1,12 @@
 import R from 'ramda'
-import prepareConnection from './prepareConnection'
+import { prepareForUpdate } from './prepareConnection'
 
 export default function updateConnections(context) {
   const { client, diff: { connections: { changes } }, say: { notice } } = context;
 
-  const print = (id) => notice('Updated connection ', id);
-  const update = (connection) => client.connections.update(R.pick(['id'], connection), prepareConnection('update')(connection));
-  const updateConnection = R.composeP(print, R.prop('id'), update);
+  const print = ({name}) => notice('Updated connection ', name);
+  const updateWrapper = R.compose(client.connections.update, prepareForUpdate);
+  const updateConnection = R.composeP(print, updateWrapper);
 
   return Promise.all(R.map(updateConnection, changes))
     .then(_ => context);

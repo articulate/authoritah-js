@@ -2,7 +2,7 @@ import R from 'ramda'
 import idgen from 'idgen'
 
 // includes legacy UUID format matcher
-const uuidMatcher = /([\w]{16}|[\w]{8}(?:-[\w]{4}){3}-[\w]{12})?[\s|-]?(.+)/
+const uuidMatcher = /([\w]{8}(?:-[\w]{4}){3}-[\w]{12}|[\w-_]{16})?[\s|-]?(.+)/
 
 export function extractUuid(attrs) {
   const { name } = attrs;

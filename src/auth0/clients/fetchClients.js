@@ -1,5 +1,5 @@
 import R from 'ramda'
-import parseClients from './parsers/parseClients'
+import parseClients from './parseClients'
 
 export default function fetchClients(context) {
   const { client } = context;

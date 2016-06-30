@@ -1,5 +1,5 @@
 import R from 'ramda'
-import { prepareForUpdate } from './parsers/prepareRule'
+import { prepareForUpdate } from './prepareRule'
 
 export default function updateRules(context) {
   const { client, diff: { rules: { changes } }, say: { notice } } = context;

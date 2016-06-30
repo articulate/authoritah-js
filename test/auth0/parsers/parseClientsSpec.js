@@ -1,4 +1,4 @@
-import parseClients from '../../../src/auth0/parsers/parseClients'
+import parseClients from '../../../src/auth0/clients/parseClients'
 import clients from '../../fixtures/clients.json'
 
 describe("parseClients", () => {

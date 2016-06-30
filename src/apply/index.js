@@ -3,8 +3,8 @@ import say from '../utils/say'
 
 import loadManifest from '../apply/loadManifest'
 import setupClient from '../utils/setupClient'
-import fetchRules from '../auth0/fetchRules'
-import fetchConnections from '../auth0/fetchConnections'
+import fetchRules from '../auth0/rules/fetchRules'
+import fetchConnections from '../auth0/connections/fetchConnections'
 
 import diff from './diff'
 import applyDiff from './applyDiff'

@@ -1,5 +1,5 @@
 import R from 'ramda'
-import parseConnections from './parsers/parseConnections'
+import parseConnections from './parseConnections'
 
 export default function fetchRules(context) {
   const { client } = context;

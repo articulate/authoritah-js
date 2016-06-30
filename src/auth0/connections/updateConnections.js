@@ -1,5 +1,5 @@
 import R from 'ramda'
-import { prepareForUpdate } from './parsers/prepareConnection'
+import { prepareForUpdate } from './prepareConnection'
 
 export default function updateConnections(context) {
   const { client, diff: { connections: { changes } }, say: { notice } } = context;

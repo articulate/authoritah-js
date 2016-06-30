@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { prepareForCreate, prepareForUpdate } from '../../../src/auth0/parsers/prepareRule'
+import { prepareForCreate, prepareForUpdate } from '../../../src/auth0/rules/prepareRule'
 import rule from '../../fixtures/rule.json'
 
 describe("prepareRule", () => {

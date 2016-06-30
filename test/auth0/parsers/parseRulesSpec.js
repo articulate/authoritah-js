@@ -1,4 +1,4 @@
-import parseRules from '../../../src/auth0/parsers/parseRules'
+import parseRules from '../../../src/auth0/rules/parseRules'
 import rules from '../../fixtures/rules.json'
 
 describe("parseRules", () => {

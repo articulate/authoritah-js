@@ -1,5 +1,5 @@
 import R from 'ramda'
-import parseRules from './parsers/parseRules'
+import parseRules from './parseRules'
 
 export default function fetchRules(context) {
   const { client } = context;

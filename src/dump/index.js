@@ -2,9 +2,9 @@ import loadEnv from '../utils/loadEnv'
 import setupClient from '../utils/setupClient'
 import say from '../utils/say'
 
-import fetchRules from '../auth0/fetchRules'
-import fetchConnections from '../auth0/fetchConnections'
-import fetchClients from '../auth0/fetchClients'
+import fetchRules from '../auth0/rules/fetchRules'
+import fetchConnections from '../auth0/connections/fetchConnections'
+import fetchClients from '../auth0/clients/fetchClients'
 
 import associateClientConnections from './associateClientConnections'
 import saveRules from './saveRules'

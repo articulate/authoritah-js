@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { prepareForCreate, prepareForUpdate } from '../../../src/auth0/parsers/prepareConnection'
+import { prepareForCreate, prepareForUpdate } from '../../../src/auth0/connections/prepareConnection'
 import conn from '../../fixtures/connection.json'
 
 describe("prepareConnection", () => {

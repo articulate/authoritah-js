@@ -1,4 +1,4 @@
-import parseConnections from '../../../src/auth0/parsers/parseConnections'
+import parseConnections from '../../../src/auth0/connections/parseConnections'
 import connections from '../../fixtures/connections.json'
 
 describe("parseConnections", () => {

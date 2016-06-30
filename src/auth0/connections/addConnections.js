@@ -1,5 +1,5 @@
 import R from 'ramda'
-import { prepareForCreate } from './parsers/prepareConnection'
+import { prepareForCreate } from './prepareConnection'
 
 export default function addConnections(context) {
   const { client, diff: { connections: { adds }}, say: { ok } } = context;

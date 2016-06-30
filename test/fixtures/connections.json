@@ -1,8 +1,7 @@
 [
   {
     "enabled_clients": [
-      "789",
-      "987"
+      "Mcu3TfMct0lsCAuEdcYkIRH2vh0aQ6J9"
     ],
     "id": "con_seannery",
     "name": "27244AB4-9C55-427C-A6D6-796A1C4C52AF google-oauth2",
@@ -18,8 +17,8 @@
   },
   {
     "enabled_clients": [
-      "123",
-      "456"
+      "Mcu3TfMct0lsCAuEdcYkIRH2vh0aQ6J9",
+      "Mm5BRBNFQqKB7sSGeRefMAzUMev6QuJ7"
     ],
     "id": "con_nonnery",
     "name": "4F686A07-2DB8-4941-99C7-86DEB3F4D20C Username-Password-Authentication",

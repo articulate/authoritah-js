@@ -1,0 +1,40 @@
+[
+  {
+    "uuid": "4567",
+    "allowed_clients": [],
+    "allowed_logout_urls": [],
+    "allowed_origins": [
+      "https://example.com/"
+    ],
+    "callback_url_template": false,
+    "callbacks": [
+      "http://local:3000",
+      "http://docker:8000",
+      "http://other.example.com:8000"
+    ],
+    "client_id": "Mcu3TfMct0lsCAuEdcYkIRH2vh0aQ6J9",
+    "custom_login_page_on": true,
+    "global": false,
+    "jwt_configuration": {
+      "alg": "HS256",
+      "lifetime_in_seconds": 36000,
+      "secret_encoded": true
+    },
+    "name": "google-auth",
+    "sso": true,
+    "tenant": "big-jim"
+  },
+  {
+    "uuid": "1234",
+    "callback_url_template": false,
+    "client_id": "Mm5BRBNFQqKB7sSGeRefMAzUMev6QuJ7",
+    "custom_login_page_on": true,
+    "global": false,
+    "jwt_configuration": {
+      "lifetime_in_seconds": 36000,
+      "secret_encoded": true
+    },
+    "name": "machines-rule",
+    "tenant": "big-jim"
+  }
+]

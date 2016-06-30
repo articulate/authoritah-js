@@ -1,28 +1,19 @@
 import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
 
+const allActions = {
+  actions: [
+    "read",
+    "create",
+    "update",
+    "delete"
+  ]
+};
+
 const DEFAULT_SCOPE = {
-  rules: {
-    actions: [
-      "read",
-      "create",
-      "update",
-      "delete"
-    ]
-  },
-  clients: {
-    actions: [
-      "read"
-    ]
-  },
-  connections: {
-    actions: [
-      "read",
-      "create",
-      "update",
-      "delete"
-    ]
-  },
+  rules: allActions,
+  clients: allActions,
+  connections: allActions,
 };
 
 export default function generateJWT(context) {
@@ -32,8 +23,8 @@ export default function generateJWT(context) {
       secret,
       key,
       refresh,
-      }
-    } = context;
+    }
+  } = context;
 
   const apiKey = key || config.orGet('auth0.key', key);
   const apiSecret = secret || config.orGet('auth0.secret', secret);
@@ -45,9 +36,9 @@ export default function generateJWT(context) {
   const decodedSecret = Buffer.from(apiSecret, 'base64');
 
   return jwt.sign({
-                    aud: apiKey,
-                    scopes: DEFAULT_SCOPE,
-                    iat: createdAt,
-                    jti: uid,
-                  }, decodedSecret);
+    aud: apiKey,
+    scopes: DEFAULT_SCOPE,
+    iat: createdAt,
+    jti: uid,
+  }, decodedSecret);
 }

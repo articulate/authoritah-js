@@ -1,6 +1,6 @@
 import fs from 'fs'
-import { prepareForCreate, prepareForUpdate } from '../../src/auth0/prepareRule'
-import rule from '../fixtures/rule.json'
+import { prepareForCreate, prepareForUpdate } from '../../../src/auth0/parsers/prepareRule'
+import rule from '../../fixtures/rule.json'
 
 describe("prepareRule", () => {
   const uuidNameTest = (result) => () => expect(result.name).to.equal(`${rule.uuid} ${rule.name}`);

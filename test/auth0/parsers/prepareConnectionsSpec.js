@@ -1,6 +1,6 @@
 import fs from 'fs'
-import { prepareForCreate, prepareForUpdate } from '../../src/auth0/prepareConnection'
-import conn from '../fixtures/connection.json'
+import { prepareForCreate, prepareForUpdate } from '../../../src/auth0/parsers/prepareConnection'
+import conn from '../../fixtures/connection.json'
 
 describe("prepareConnection", () => {
   context('create', () => {

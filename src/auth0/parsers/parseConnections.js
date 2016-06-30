@@ -1,13 +1,14 @@
 import R from 'ramda';
-import { extractUuid } from '../utils/transformUuidName'
+import { extractUuid } from '../../utils/transformUuidName'
 
 const filterFields = R.pick([
   'name',
   'id',
   'options',
   'strategy',
+  'enabled_clients'
 ]);
-const filterOptions = R.over(R.lensProp('options'), R.pick(["configuration", "customScripts"]));
+const filterOptions = R.over(R.lensProp('options'), R.pick(["customScripts"]));
 const transformEach = R.map(R.compose(extractUuid, filterFields, filterOptions));
 
 export default function parseConnections(context) {

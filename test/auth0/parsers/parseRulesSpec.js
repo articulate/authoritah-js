@@ -1,5 +1,5 @@
-import parseRules from '../../src/auth0/parseRules'
-import rules from '../fixtures/rules.json'
+import parseRules from '../../../src/auth0/parsers/parseRules'
+import rules from '../../fixtures/rules.json'
 
 describe("parseRules", () => {
   const { rules: parsed } = parseRules({ rules });

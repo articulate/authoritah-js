@@ -1,5 +1,5 @@
 import R from 'ramda'
-import { combineUuid } from '../utils/transformUuidName'
+import { combineUuid } from '../../utils/transformUuidName'
 
 const MAX_NAME_SIZE = 18;
 const filterFields = R.pick(['options', 'name', 'strategy', 'enabled_clients']);

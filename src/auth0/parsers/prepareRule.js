@@ -1,5 +1,5 @@
 import R from 'ramda'
-import { combineUuid } from '../utils/transformUuidName'
+import { combineUuid } from '../../utils/transformUuidName'
 
 const filterFields = R.pick([
   'name',

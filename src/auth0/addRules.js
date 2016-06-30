@@ -1,5 +1,5 @@
 import R from 'ramda'
-import { prepareForCreate } from './prepareRule'
+import { prepareForCreate } from './parsers/prepareRule'
 
 export default function addRules(context) {
   const { client, diff: { rules: { adds } }, say: { ok } } = context;

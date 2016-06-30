@@ -1,4 +1,3 @@
-import fs from 'fs'
 import R from 'ramda'
 import saveScripts from '../utils/saveScripts'
 

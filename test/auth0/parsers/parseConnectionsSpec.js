@@ -1,12 +1,12 @@
-import parseConnections from '../../src/auth0/parseConnections'
-import connections from '../fixtures/connections.json'
+import parseConnections from '../../../src/auth0/parsers/parseConnections'
+import connections from '../../fixtures/connections.json'
 
 describe("parseConnections", () => {
   const { connections: result } = parseConnections({ connections });
 
   context('transforms connections from API to the manifest representation', () => {
     it('extracts needed fields', () => {
-      expect(result[0]).to.have.all.keys(["id", "name", "uuid", 'options', 'strategy']);
+      expect(result[0]).to.have.all.keys(["id", "name", "uuid", 'options', 'strategy', 'enabled_clients']);
     });
 
     it('splits uuid from name', () => {
@@ -15,7 +15,7 @@ describe("parseConnections", () => {
     });
 
     it('filters options', () => {
-      expect(result[1].options).to.have.all.keys(['configuration', 'customScripts']);
+      expect(result[1].options).to.have.all.keys(['customScripts']);
     });
   });
 });

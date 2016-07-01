@@ -7,3 +7,4 @@ auth0.yml
 auth0.json
 .authoritah.json
 creds.txt
+*.map

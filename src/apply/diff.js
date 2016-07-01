@@ -2,7 +2,7 @@ import R from 'ramda'
 
 const COMPARE_FIELDS = {
   rules: R.pick(['script', 'stage', 'enabled', 'name']),
-  connections: R.pick(['name', 'options', 'strategy'])
+  connections: R.pick(['name', 'options', 'strategy']),
 };
 
 function selectiveEquals(field) {

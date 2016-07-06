@@ -1,5 +1,5 @@
 import R from 'ramda'
-import { associate, disassociate } from '../../src/dump/associateClientConnections'
+import { associate, disassociate } from '../../src/utils/associateClientConnections'
 import connections from '../fixtures/connections.json'
 import clients from '../fixtures/clients.json'
 

@@ -7,10 +7,12 @@ const formatter = R.ifElse(R.equals('json'),
   R.always(R.curry(JSON.stringify)(R.__, null, 2)),
   R.always(R.curry(yaml.dump)(R.__, {noRefs: true})));
 
+const filterOptions = R.over(R.lensProp('options'), R.pick(["customScripts"]));
 const selectTypes = R.pick(['rules', 'connections', 'clients']);
+
 const transformations = {
   rules: dropField('id'),
-  connections: dropField('id'),
+  connections: R.compose(filterOptions, dropField('id')),
   clients: dropField('client_id'),
 };
 

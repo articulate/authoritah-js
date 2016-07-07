@@ -14,8 +14,14 @@ describe("parseConnections", () => {
       expect(result[1].uuid).to.eq("4F686A07-2DB8-4941-99C7-86DEB3F4D20C")
     });
 
-    it('filters options', () => {
-      expect(result[1].options).to.have.all.keys(['customScripts']);
+    it('passes through options', () => {
+
+      expect(result[1].options).to.have.all.keys([
+        "brute_force_protection",
+        "configuration",
+        "customScripts",
+        "enabledDatabaseCustomization"
+      ]);
     });
   });
 });

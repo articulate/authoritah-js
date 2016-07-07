@@ -6,10 +6,9 @@ const filterFields = R.pick([
   'id',
   'options',
   'strategy',
-  'enabled_clients'
+  'enabled_clients',
 ]);
-const filterOptions = R.over(R.lensProp('options'), R.pick(["customScripts"]));
-const transformEach = R.map(R.compose(extractUuid, filterFields, filterOptions));
+const transformEach = R.map(R.compose(extractUuid, filterFields));
 
 export default function parseConnections(context) {
   const { connections } = context;

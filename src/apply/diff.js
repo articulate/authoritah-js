@@ -1,8 +1,9 @@
 import R from 'ramda'
 
+const filterOptions = R.over(R.lensProp('options'), R.pick(["customScripts"]));
 const COMPARE_FIELDS = {
   rules: R.pick(['script', 'stage', 'enabled', 'name']),
-  connections: R.pick(['name', 'options', 'strategy']),
+  connections: R.compose(filterOptions, R.pick(['name', 'options', 'strategy'])),
   // clients: R.pick(['name']),
 };
 
@@ -25,7 +26,7 @@ function diff(field, context) {
   const { manifest: { [field]: local }, [field]: server, say: { ok } } = context;
 
   const diff = {
-    changes: changedIntersection(field)(server, local),
+    changes: changedIntersection(field)(local, server),
     removes: difference(server, local),
     adds: difference(local, server)
   };

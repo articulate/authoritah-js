@@ -10,7 +10,7 @@ import removeConnections from '../auth0/removeConnections'
 
 const getActions = R.flip(R.prop)({
   rules: [addRules, updateRules, removeRules],
-  connections: [addConnections, updateConnections, removeConnections],
+  connections: [],  //[addConnections, updateConnections, removeConnections],
 });
 
 function parallelizer(context, functions) {

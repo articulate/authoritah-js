@@ -6,8 +6,8 @@ import generateJWT from '../jwt/generateJWT'
 
 const QUESTIONS = [
   { type: 'input', name: "auth0.domain", message: "Enter your Auth0 domain (leave off the 'auth0.com'):" },
-  { type: 'input', name: "auth0.key", message: "Auth0 key:" },
-  { type: 'password', name: "auth0.secret", message: "Auth0 secret:" }
+  { type: 'input', name: "auth0.key", message: "Auth0 client id:" },
+  { type: 'password', name: "auth0.secret", message: "Auth0 client secret:" }
 ]
 
 function saveAnswers(context) {

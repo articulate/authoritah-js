@@ -2,8 +2,7 @@ import R from 'ramda'
 import saveScripts from '../utils/saveScripts'
 import { expandObject, combineObject } from '../utils/objectManipulation'
 
-const scriptPath = ['options', 'customScripts'];
-const ruleLens = R.lens(R.path(scriptPath), R.assocPath(scriptPath));
+const ruleLens = R.lensPath(['options', 'customScripts']);
 
 const transformForSave = (saveFn) => R.over(ruleLens, R.compose(R.map(saveFn), expandObject('name', 'script')));
 const transformForWrite = R.over(ruleLens, combineObject('name', 'script'));

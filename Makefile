@@ -14,6 +14,9 @@ watch:
 clean:
 	npm run clean
 
+container:
+	docker build .
+
 release:
 	git push origin master
 	git tag $(VERSION)

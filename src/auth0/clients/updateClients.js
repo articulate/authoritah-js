@@ -1,5 +1,5 @@
 import R from 'ramda'
-import prepareClient from './prepareClient'
+import prepareClient from '../../transformers/clients/prepareClientForDiff'
 
 export default function updateClients(context) {
   const { client, diff: { clients: { changes } }, say: { notice } } = context;

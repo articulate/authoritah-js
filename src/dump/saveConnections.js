@@ -1,6 +1,6 @@
 import R from 'ramda'
 import saveScripts from '../utils/saveScripts'
-import { expandObject, combineObject } from '../utils/objectManipulation'
+import { expandObject, combineObject } from '../transformers/objectManipulation'
 
 const ruleLens = R.lensPath(['options', 'customScripts']);
 

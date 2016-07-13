@@ -1,15 +1,11 @@
-import parseRules from '../../../src/auth0/rules/parseRules'
-import rules from '../../fixtures/rules.json'
+import parseRules from '../../src/transformers/rules/parseRules'
+import rules from '../fixtures/rules.json'
 
 describe("parseRules", () => {
   const { rules: parsed } = parseRules({ rules });
 
   it('parses all rules', () => {
     expect(parsed.length).to.equal(4);
-  });
-
-  it('fetches expected fields', () => {
-    expect(parsed[0]).to.have.all.keys('id', 'name', 'uuid', 'script', 'stage', 'enabled');
   });
 
   context("name and uuid", () => {

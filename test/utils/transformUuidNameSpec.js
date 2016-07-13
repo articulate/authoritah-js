@@ -1,4 +1,4 @@
-import { extractUuid, combineUuid } from '../../src/utils/transformUuidName'
+import { extractUuid, combineUuid } from '../../src/transformers/transformUuidName'
 
 describe("transformations on UUID name", () => {
   context('extraction', () => {
@@ -8,10 +8,19 @@ describe("transformations on UUID name", () => {
       expect(result).to.eql({name: "Name With Face", uuid: "EBF20416-414D-42F8-8766-3524F944C28F" });
     });
 
-    it('can extract a 16-digit uuid from a combined id name', () => {
-      const result = extractUuid({name: "i_X7ZQWutF6evjKl-my-new-name"});
 
-      expect(result).to.eql({name: "my-new-name", uuid: "i_X7ZQWutF6evjKl" });
+    context('16-digit uuid', () => {
+      it('can extract from a dash-combined id name', () => {
+        const result = extractUuid({name: "i_X7ZQWutF6evjKl-my-new-name"});
+
+        expect(result).to.eql({name: "my-new-name", uuid: "i_X7ZQWutF6evjKl" });
+      });
+
+      it('can extract from a space-combined id name', () => {
+        const result = extractUuid({name: "i_X7ZQWutF6evjKl my new name"});
+
+        expect(result).to.eql({name: "my new name", uuid: "i_X7ZQWutF6evjKl" });
+      });
     });
 
     it('creates UUID if no UUID found', () => {

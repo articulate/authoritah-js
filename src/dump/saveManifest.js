@@ -3,17 +3,20 @@ import fs from 'fs'
 import R from 'ramda'
 import promisify from '../utils/promisify'
 
+import ruleTransformer from '../transformers/rules/prepareRuleForSave'
+import connectionTransformer from '../transformers/connections/prepareConnectionForSave'
+import clientTransformer from '../transformers/clients/prepareClientForSave'
+
 const formatter = R.ifElse(R.equals('json'),
   R.always(R.curry(JSON.stringify)(R.__, null, 2)),
   R.always(R.curry(yaml.dump)(R.__, {noRefs: true})));
 
-const filterOptions = R.over(R.lensProp('options'), R.pick(["customScripts"]));
 const selectTypes = R.pick(['rules', 'connections', 'clients']);
 
 const transformations = {
-  rules: R.map(R.omit(['id'])),
-  connections: R.map(R.compose(filterOptions, R.omit('id'))),
-  clients: R.map(R.omit(['client_id'])),
+  rules: R.map(ruleTransformer),
+  connections: R.map(connectionTransformer),
+  clients: R.map(clientTransformer),
 };
 
 export default function saveManifest(filename) {

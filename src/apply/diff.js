@@ -1,36 +1,26 @@
 import R from 'ramda'
+import ruleDiff from '../transformers/rules/prepareRuleForDiff'
+import connectionDiff from '../transformers/connections/prepareConnectionForDiff'
 
-const filterOptions = R.over(R.lensProp('options'), R.pick(["customScripts"]));
+import additions from './diff/additions'
+import removals from './diff/removals'
+import changes from './diff/changes'
+
 const COMPARE_FIELDS = {
-  rules: R.pick(['script', 'stage', 'enabled', 'name']),
-  connections: R.compose(filterOptions, R.pick(['name', 'options', 'strategy'])),
-  // clients: R.pick(['name']),
+  rules: ruleDiff,
+  connections: connectionDiff,
 };
-
-function selectiveEquals(field) {
-  const selector = COMPARE_FIELDS[field];
-  return function(lhs, rhs) {
-    return R.equals(selector(lhs), selector(rhs));
-  }
-}
-
-const bothExist = (lhs, rhs) => R.and(lhs, rhs);
-const isChanged = (field) => R.both(bothExist, R.complement(selectiveEquals(field)));
-
-const groupByUuid = R.compose(R.groupBy(R.prop('uuid')), R.concat);
-const findChanges = (field) => R.filter(R.apply(isChanged(field)));
-const difference = R.differenceWith(R.eqProps('uuid'));
-const changedIntersection = (field) => R.compose(R.values, R.map(R.mergeAll), findChanges(field), groupByUuid);
 
 function diff(field, context) {
   const { manifest: { [field]: local }, [field]: server, say: { ok } } = context;
+  const filter = COMPARE_FIELDS[field];
 
   const diff = {
-    changes: changedIntersection(field)(local, server),
-    removes: difference(server, local),
-    adds: difference(local, server)
+    changes: changes(filter)(local, server),
+    removes: removals(local, server),
+    adds: additions(local, server)
   };
-
+  
   if(R.all(R.isEmpty, R.values(diff))) { ok(`No changes to apply for ${field}!`); }
   return R.assocPath(['diff', field], diff, context);
 }

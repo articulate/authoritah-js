@@ -1,5 +1,5 @@
 import R from 'ramda'
-import { expandObject, combineObject } from '../../src/utils/objectManipulation'
+import { expandObject, combineObject } from '../../src/transformers/objectManipulation'
 
 describe("object manipulation utils", () => {
   const obj = { logo: 'magic', basic: 'test' };

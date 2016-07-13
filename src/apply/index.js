@@ -24,7 +24,7 @@ export default function index(filename='./auth0.yml', options) {
     .then(disassociate)
     .then(diff('rules'))
     .then(diff('connections'))
-    .then(insertClients)
+    .then(insertClients)  // temporary until we want to manage clients
     .then(applyDiff)
     .catch(error);
 }

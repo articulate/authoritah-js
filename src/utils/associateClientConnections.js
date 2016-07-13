@@ -14,6 +14,7 @@ export function associate(context) {
 
   return R.over(R.lensProp('connections'), R.map(associateClient), context);
 }
+
 export function disassociate(context) {
   const { clients } = context;
   const retrieveIds = R.compose(R.pluck('client_id'), findAllIn(clients, 'uuid'));

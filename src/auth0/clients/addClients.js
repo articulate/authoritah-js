@@ -1,5 +1,5 @@
 import R from 'ramda'
-import prepareClient from './prepareClient'
+import { prepareClient } from '../../transformers/clients/prepareClientForDiff'
 
 export default function addClients(context) {
   const { client, diff: { clients: { adds } }, say: { ok } } = context;

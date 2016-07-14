@@ -1,16 +1,14 @@
 import fs from 'fs'
 import R from 'ramda'
 import yaml from 'js-yaml'
-import loadScript from '../utils/loadScript'
 
-// Connections require a bit of manipulation to work with the `loadScript` function expectations
-const loadConnectionScripts = R.over(R.lensPath(['options', 'customScripts']),
-  R.mapObjIndexed((_, key, object) => loadScript(key, object)[key]));
+import loadConnections from '../transformers/connections/loadConnections'
+import loadRules from '../transformers/rules/loadRules'
 
 const transformations = {
-  rules: R.map(loadScript('script')),
-  connections: R.map(loadConnectionScripts),
-}
+  rules: loadRules,
+  connections: loadConnections,
+};
 
 export default function loadManifest(filename) {
   const parser = filename.endsWith("json") ? JSON.parse : yaml.load;

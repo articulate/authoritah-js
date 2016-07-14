@@ -10,10 +10,6 @@ describe("prepareConnection", () => {
     it('selects fields', () => {
       expect(result).to.have.all.keys(['name', 'options', 'strategy', 'enabled_clients']);
     });
-
-    it('combines uuid and truncated name', () => {
-      expect(result.name).to.equal(`${conn.uuid}-${conn.name.substring(0,18)}`);
-    });
   });
 
   context('update', () => {

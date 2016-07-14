@@ -20,7 +20,7 @@ function diff(field, context) {
     removes: removals(local, server),
     adds: additions(local, server)
   };
-  
+
   if(R.all(R.isEmpty, R.values(diff))) { ok(`No changes to apply for ${field}!`); }
   return R.assocPath(['diff', field], diff, context);
 }

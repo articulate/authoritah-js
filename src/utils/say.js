@@ -3,8 +3,8 @@ import cl from 'cli-color'
 import { inspect } from 'util'
 
 const printers = {
-  error: [ console.error, cl.red.bold ],
-  warn: [ console.warn, cl.yellow.italic ],
+  error: [ console.log, cl.red.bold ],
+  warn: [ console.log, cl.yellow.italic ],
   ok: [ console.log, cl.green ],
   notice: [ console.log, cl.cyan ],
   say: [ console.log ],
@@ -20,8 +20,8 @@ export default function say(options) {
   return R.map(([printer, fmt]) => {
     const boundPrint = printer.bind(console);
 
-    if(!fmt) { return boundPrint; }
+    if(!fmt || !color) { return boundPrint; }
 
-    return color ? R.compose(boundPrint, fmt, hydrate) : boundPrint;
+    return R.compose(boundPrint, fmt, hydrate);
   }, printers);
 }

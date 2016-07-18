@@ -1,3 +1,4 @@
+import R from 'ramda'
 import loadEnv from '../utils/loadEnv'
 import say from '../utils/say'
 
@@ -10,7 +11,10 @@ import { disassociate } from '../utils/associateClientConnections'
 
 import diff from './diff'
 import applyDiff from './applyDiff'
+import printDiff from './printDiff'
 import insertClients from './insertClients'
+
+const isDryRun = R.pathEq(['options', 'dryRun'], true);
 
 export default function index(filename='./auth0.yml', options) {
   const { error } = say(options);
@@ -25,6 +29,6 @@ export default function index(filename='./auth0.yml', options) {
     .then(diff('rules'))
     .then(diff('connections'))
     .then(insertClients)  // temporary until we want to manage clients
-    .then(applyDiff)
+    .then(R.ifElse(isDryRun, printDiff, applyDiff))
     .catch(error);
 }

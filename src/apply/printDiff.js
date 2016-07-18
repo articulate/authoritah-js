@@ -6,17 +6,20 @@ const formatJSON  = R.curry(JSON.stringify)(R.__, null, "\t");
 const printGroup = R.curry((printers, typeDef) => {
   const types = R.keys(typeDef);
 
-  R.map((key) => {
+  R.forEach((key) => {
     const actions = fromObj(typeDef, key);
     const verbs = R.keys(actions);
 
     console.log(`********* ${key} *********`);
 
-    R.map((actionName) => {
+    // early exit if no changes found
+    if(R.all(R.isEmpty, R.values(actions))) { return printers('adds')("No changes!"); }
+
+    R.forEach((actionName) => {
       const diffs = fromObj(actions, actionName);
       const printer = printers(actionName);
 
-      R.map(R.compose(printer, formatJSON), diffs);
+      R.forEach(R.compose(printer, formatJSON), diffs);
     }, verbs);
   }, types);
 
@@ -24,16 +27,16 @@ const printGroup = R.curry((printers, typeDef) => {
 });
 
 export default function printDiff(context) {
-  const { diff, say: { notice: changes, ok: adds, warn: removes } } = context;
+  const { diff, say: { notice: changes, ok: adds, error: removes } } = context;
   const types = R.keys(diff);
   const printers = fromObj({ adds, changes, removes });
 
-  R.map(R.compose(printGroup(printers), R.flip(R.pick)(diff), R.of), types);
+  R.forEach(R.compose(printGroup(printers), R.flip(R.pick)(diff), R.of), types);
 
   console.log("Legend: ");
   removes("- Removed");
   changes("- Changed");
-  adds("- Added\n");
+  adds("- Added");
 
   return context;
 }

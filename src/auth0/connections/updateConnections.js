@@ -3,12 +3,9 @@ import prepareUpdate from '../../transformers/connections/prepareConnectionForUp
 import apiCallWrapper from '../../utils/apiCallWrapper'
 
 export default function updateConnections(context) {
-  const { client, diff: { connections: { changes } }, say: { notice } } = context;
-  const updateFn = apiCallWrapper(client.connections.update, context);
-
-  const print = ({name}) => notice('Updated connection ', name);
-  const updateWrapper = (connection) => updateFn({ id: connection.id }, prepareUpdate(connection));
-  const updateConnection = R.composeP(print, updateWrapper);
+  const { diff: { connections: { changes } } } = context;
+  const updateFn = apiCallWrapper("connections.update", context);
+  const updateConnection = R.compose(updateFn, prepareUpdate);
 
   return Promise.all(R.map(updateConnection, changes))
     .then(_ => context);

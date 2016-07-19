@@ -1,12 +1,10 @@
 import R from 'ramda'
+import apiCallWrapper from '../../utils/apiCallWrapper'
 
 export default function removeClients(context) {
-  const { client, diff: { clients: { removes } }, say: { warn } } = context;
+  const { diff: { clients: { removes } } } = context;
+  const removeFn = apiCallWrapper('clients.delete', context);
 
-  const print = ({name}) => warn(`Removed client ${name}`);
-  const removeWrapper = (cl) => client.clients.delete(R.pick(['client_id'], cl)).then(_ => cl);
-  const removeClient = R.composeP(print, removeWrapper);
-
-  return Promise.all(R.map(removeClient, removes))
+  return Promise.all(R.map(removeFn, removes))
     .then(_ => context);
 }

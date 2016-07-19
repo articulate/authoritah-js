@@ -1,12 +1,10 @@
 import R from 'ramda'
+import apiCallWrapper from '../../utils/apiCallWrapper'
 
 export default function removeRules(context) {
-  const { client, diff: { rules: { removes } }, say: { warn } } = context;
+  const { diff: { rules: { removes } } } = context;
+  const removeFn = apiCallWrapper('rules.delete', context);
 
-  const print = ({name}) => warn(`Removed rule ${name}`);
-  const removeWrapper = (rule) => client.rules.delete(rule.id).then(_ => rule);
-  const removeRule = R.composeP(print, removeWrapper);
-
-  return Promise.all(R.map(removeRule, removes))
+  return Promise.all(R.map(removeFn, removes))
     .then(_ => context);
 }

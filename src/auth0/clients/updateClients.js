@@ -1,12 +1,11 @@
 import R from 'ramda'
-import prepareClient from '../../transformers/clients/prepareClientForDiff'
+import prepare from '../../transformers/clients/prepareClientForUpdate'
+import apiCallWrapper from '../../utils/apiCallWrapper'
 
 export default function updateClients(context) {
-  const { client, diff: { clients: { changes } }, say: { notice } } = context;
-
-  const print = ({name}) => notice('Updated client ', name);
-  const updateWrapper = (cl) => client.clients.update(R.pick(['client_id'], cl), prepareClient(cl));
-  const updateClient = R.composeP(print, updateWrapper);
+  const { diff: { clients: { changes } } } = context;
+  const updateFn = apiCallWrapper("clients.update", context);
+  const updateClient = R.compose(updateFn, prepare);
 
   return Promise.all(R.map(updateClient, changes))
     .then(_ => context);

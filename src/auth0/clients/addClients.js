@@ -1,12 +1,15 @@
 import R from 'ramda'
-import {prepareClient} from '../../transformers/clients/prepareClientForDiff'
-import apiCallWrapper from '../../utils/apiCallWrapper'
+import prepare from '../../transformers/clients/prepareClientForDiff'
+import apiErrorHandler from '../../utils/apiErrorHandler'
 
 export default function addClients(context) {
-  const { diff: { clients: { adds } } } = context;
-  const createFn = apiCallWrapper("clients.create", context);
-  const addClient = R.compose(createFn, prepareClient);
+  const { client, diff: { clients: { adds } }, say: { ok } } = context;
+  const print = ({ name }) => ok("Created client: ", name);
+  const createFn = (obj) =>
+    client.clients.create(prepare(obj))
+      .then(print)
+      .catch(apiErrorHandler("creating client", obj, context));
 
-  return Promise.all(R.map(addClient, adds))
+  return Promise.all(R.map(createFn, adds))
     .then(_ => context);
 }

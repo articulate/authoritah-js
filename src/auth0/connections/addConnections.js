@@ -1,12 +1,15 @@
 import R from 'ramda'
-import prepareForCreate from '../../transformers/connections/prepareConnectionForCreate'
-import apiCallWrapper from '../../utils/apiCallWrapper'
+import prepare from '../../transformers/connections/prepareConnectionForCreate'
+import apiErrorHandler from '../../utils/apiErrorHandler'
 
 export default function addConnections(context) {
-  const { diff: { connections: { adds } } } = context;
-  const addFn = apiCallWrapper('connections.create', context);
-  const addConnection = R.compose(addFn, prepareForCreate);
+  const { client, diff: { connections: { adds } }, say: { ok }} = context;
+  const print = ({ name }) => ok("Created connection: ", name);
+  const createFn = (obj) =>
+    client.connections.create(prepare(obj))
+      .then(print)
+      .catch(apiErrorHandler("creating connection", obj, context));
 
-  return Promise.all(R.map(addConnection, adds))
+  return Promise.all(R.map(createFn, adds))
     .then(_ => context);
 }

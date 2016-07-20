@@ -1,12 +1,16 @@
 import R from 'ramda'
-import prepareUpdate  from '../../transformers/rules/prepareRuleForUpdate'
-import apiCallWrapper from '../../utils/apiCallWrapper'
+import prepare  from '../../transformers/rules/prepareRuleForUpdate'
+import apiErrorHandler from '../../utils/apiErrorHandler'
 
+const getId = R.pick(['id']);
 export default function updateRules(context) {
-  const { diff: { rules: { changes } } } = context;
-  const updateFn = apiCallWrapper("rules.update", context);
-  const updateRule = R.compose(updateFn, prepareUpdate);
+  const { client, diff: { rules: { changes } }, say: { notice } } = context;
+  const print = ({ name }) => notice("Updated rule: ", name);
+  const updateFn = (obj) =>
+    client.rules.update(getId(obj), prepare(obj))
+      .then(print)
+      .catch(apiErrorHandler(obj, "updating rule", context));
 
-  return Promise.all(R.map(updateRule, changes))
+  return Promise.all(R.map(updateFn, changes))
     .then(_ => context)
 }

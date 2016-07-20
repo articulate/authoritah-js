@@ -1,9 +1,14 @@
 import R from 'ramda'
-import apiCallWrapper from '../../utils/apiCallWrapper'
+import apiErrorHandler from '../../utils/apiErrorHandler'
 
 export default function removeConnections(context) {
-  const { diff: { connections: { removes } } } = context;
-  const removeFn = apiCallWrapper('connections.delete', context);
+  const { client, diff: { connections: { removes } }, say: { warn } } = context;
+  const print = ({name}) => warn("Removed connection: ", name);
+  const removeFn = (obj) =>
+    client.connections.delete(R.pick(['id'], obj))
+      .then(_ => print(obj))
+      .catch(apiErrorHandler(obj, 'removing connection', context));
+
 
   return Promise.all(R.map(removeFn, removes))
     .then(_ => context);

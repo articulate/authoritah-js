@@ -1,12 +1,16 @@
 import R from 'ramda'
-import prepareUpdate from '../../transformers/connections/prepareConnectionForUpdate'
-import apiCallWrapper from '../../utils/apiCallWrapper'
+import prepare from '../../transformers/connections/prepareConnectionForUpdate'
+import apiErrorHandler from '../../utils/apiErrorHandler'
 
+const getId = R.pick(['id']);
 export default function updateConnections(context) {
-  const { diff: { connections: { changes } } } = context;
-  const updateFn = apiCallWrapper("connections.update", context);
-  const updateConnection = R.compose(updateFn, prepareUpdate);
+  const { client, diff: { connections: { changes } }, say: { notice } } = context;
+  const print = ({name}) => notice("Updated connection: " , name);
+  const updateFn = (obj) =>
+    client.connections.update(getId(obj), prepare(obj))
+      .then(print)
+      .catch(apiErrorHandler(obj, "updating connection", context));
 
-  return Promise.all(R.map(updateConnection, changes))
+  return Promise.all(R.map(updateFn, changes))
     .then(_ => context);
 }

@@ -13,6 +13,7 @@ watch:
 
 clean:
 	npm run clean
+	make build
 
 container:
 	docker build .

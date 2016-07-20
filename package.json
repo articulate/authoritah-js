@@ -34,6 +34,7 @@
     "commander": "^2.9.0",
     "fs-extra": "^0.30.0",
     "idgen": "^2.0.2",
+    "inflect": "^0.3.0",
     "inquirer": "^1.0.3",
     "js-yaml": "^3.6.1",
     "jsonwebtoken": "^7.0.0",

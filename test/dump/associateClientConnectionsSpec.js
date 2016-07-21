@@ -6,30 +6,31 @@ import clients from '../fixtures/clients.json'
 const fixture = { connections, clients };
 
 describe("connection to client mapping", () => {
-  const { connections } = associate(fixture);
+  const { connections: assocConnections } = associate(fixture);
+  const withManifest = R.merge({ manifest: { connections: assocConnections }}, fixture);
 
   context('associate', () => {
-    const [first, second] = connections;
+    const [first, second] = assocConnections;
 
-    it('associates clients with connections by the assigned uuid', () => {
-      expect(first.enabled_clients).to.eql(["4567"]);
+    it('associates clients with connections by the assigned name', () => {
+      expect(first.enabled_clients).to.eql(["google-auth"]);
     });
 
     it('can deal with multiple clients', () => {
-      expect(second.enabled_clients).to.eql(["4567", "1234"]);
+      expect(second.enabled_clients).to.eql(["google-auth", "machines-rule"]);
     });
   });
 
   context('disassociate', () => {
-    const { manifest: { connections: [first, second] } } = disassociate(R.merge({ manifest: { connections }}, fixture));
+    const { manifest: { connections: [first, second] } } = disassociate(withManifest);
+    const [origFirst, origSecond] = connections;
 
     it('re-associates clients with connections by the client_id', () => {
-      expect(first.enabled_clients).to.eql(["Mcu3TfMct0lsCAuEdcYkIRH2vh0aQ6J9"]);
+      expect(first.enabled_clients).to.eql(origFirst.enabled_clients);
     });
 
     it('can deal with multiple clients', () => {
-      expect(second.enabled_clients).to.eql(["Mcu3TfMct0lsCAuEdcYkIRH2vh0aQ6J9", "Mm5BRBNFQqKB7sSGeRefMAzUMev6QuJ7"]);
+      expect(second.enabled_clients).to.eql(origSecond.enabled_clients);
     });
   });
-
 });

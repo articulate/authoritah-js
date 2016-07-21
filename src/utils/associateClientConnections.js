@@ -9,7 +9,7 @@ function findAllIn(collection, key) {
 
 export function associate(context) {
   const { clients } = context;
-  const retrieveIds = R.compose(R.pluck('uuid'), findAllIn(clients, 'client_id'));
+  const retrieveIds = R.compose(R.pluck('name'), findAllIn(clients, 'client_id'));
   const associateClient = R.over(R.lensProp('enabled_clients'), retrieveIds);
 
   return R.over(R.lensProp('connections'), R.map(associateClient), context);
@@ -17,7 +17,7 @@ export function associate(context) {
 
 export function disassociate(context) {
   const { clients } = context;
-  const retrieveIds = R.compose(R.pluck('client_id'), findAllIn(clients, 'uuid'));
+  const retrieveIds = R.compose(R.pluck('client_id'), findAllIn(clients, 'name'));
   const associateClient = R.over(R.lensProp('enabled_clients'), retrieveIds);
 
   return R.over(R.lensPath(['manifest', 'connections']), R.map(associateClient), context);

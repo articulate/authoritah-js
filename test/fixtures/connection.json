@@ -9,6 +9,5 @@
       "login": "./test/fixtures/dummy_scripts/dummy.js"
     }
   },
-  "uuid": "bkas-TEwJc0QOj9M",
   "strategy": "auth0"
 }

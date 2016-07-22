@@ -15,9 +15,9 @@ import applyDiff from './applyDiff'
 import printDiff from './printDiff'
 
 const ensure = (context) => {
-  const { config, options: { env, dryRun } } = context;
+  const { config, options: { env, dryRun, yes } } = context;
 
-  if(dryRun) { return context; }
+  if(yes || dryRun) { return context; }
 
   const usingEnv = config.orGet("auth0.env", env);
   return inquirer.prompt({

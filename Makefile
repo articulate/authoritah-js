@@ -1,4 +1,4 @@
-VERSION:=$(shell ./bin/authoritah --version)
+VERSION:=$(shell cat package.json | jq .version --raw-output)
 
 .PHONY: build watch test clean
 

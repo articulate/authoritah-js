@@ -1,4 +1,4 @@
-import R from 'ramda'
+import prepareClientForSave from './prepareClientForSave'
 
-const prepareClientForDiff = R.pick(['name']);
+const prepareClientForDiff = prepareClientForSave;
 export default prepareClientForDiff;

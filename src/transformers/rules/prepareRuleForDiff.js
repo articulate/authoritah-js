@@ -1,4 +1,4 @@
-import R from 'ramda';
+import prepareRuleForSave from './prepareRuleForSave'
 
-const prepareRuleForDiff = R.pick(['script', 'stage', 'enabled', 'name', 'order']);
+const prepareRuleForDiff = prepareRuleForSave;
 export default prepareRuleForDiff;

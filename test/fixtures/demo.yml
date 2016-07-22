@@ -1,0 +1,27 @@
+rules:
+  - enabled: true
+    script: ./test/fixtures/dummy_scripts/dummy.js
+    name: Test One
+    order: 1
+    stage: login_success
+  - enabled: true
+    script: ./test/fixtures/dummy_scripts/dummy.js
+    name: Test Two
+    order: 2
+    stage: login_success
+connections:
+  - name: google-oauth2
+    strategy: google-oauth2
+    enabled_clients:
+      - google-auth
+  - name: user-pass-auth
+    options:
+      customScripts:
+        login: ./test/fixtures/dummy_scripts/dummy.js
+        get_user: ./test/fixtures/dummy_scripts/dummy.js
+    strategy: auth0
+    enabled_clients:
+      - Default App
+clients:
+  - name: Default App
+  - name: google-auth

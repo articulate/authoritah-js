@@ -22,7 +22,6 @@ function addSetupCommand(cli) {
   return cli;
 }
 
-
 function addConfigCommand(cli) {
   cli.command('config <command> [args...]')
     .description('Manage Authoritah config variables. ' +
@@ -65,6 +64,7 @@ function addApplyCommand(cli) {
     .option('-k, --key <key>', "The Auth0 domain key.")
     .option('-s, --secret <secret>', "The Auth0 domain secret.")
     .option('-d, --dry-run', "Perform a dry run, outputting the diff that will be applied.")
+    .option('-y, --yes', "Bypass confirmation step.")
     .action(applyInterface);
 
   return cli;

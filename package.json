@@ -33,21 +33,20 @@
     "cli-color": "^1.1.0",
     "commander": "^2.9.0",
     "fs-extra": "^0.30.0",
-    "idgen": "^2.0.2",
     "inflect": "^0.3.0",
     "inquirer": "^1.0.3",
     "js-yaml": "^3.6.1",
     "jsonwebtoken": "^7.0.0",
-    "ramda": "^0.21.0",
-    "sinon": "^1.17.4",
-    "sinon-chai": "^2.8.0"
+    "ramda": "^0.21.0"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
     "babel-preset-es2015": "^6.9.0",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "sinon": "^1.17.4",
+    "sinon-chai": "^2.8.0"
   },
   "babel": {
     "presets": [

@@ -1,6 +1,5 @@
 [
   {
-    "uuid": "4567",
     "allowed_clients": [],
     "allowed_logout_urls": [],
     "allowed_origins": [
@@ -25,7 +24,6 @@
     "tenant": "big-jim"
   },
   {
-    "uuid": "1234",
     "callback_url_template": false,
     "client_id": "Mm5BRBNFQqKB7sSGeRefMAzUMev6QuJ7",
     "custom_login_page_on": true,

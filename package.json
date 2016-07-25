@@ -1,6 +1,6 @@
 {
   "name": "authoritah-js",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "CLI tooling for Auth0 instance management",
   "scripts": {
     "build": "babel src -d lib -s",

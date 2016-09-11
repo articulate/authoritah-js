@@ -5,7 +5,8 @@ function selectiveEquals(filter) {
 }
 
 const deepMerge = R.mergeWith((l,r) =>
-  R.is(Array, l) && R.is(Array, r) ? R.concat(l, r)
+  R.isEmpty(r) ? r
+    : R.is(Array, l) && R.is(Array, r) ? R.concat(l, r)
     : !(R.is(Object, l) && R.is(Object, r)) ? r
     : deepMerge(l, r)
 )

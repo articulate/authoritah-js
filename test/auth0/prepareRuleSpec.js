@@ -4,7 +4,7 @@ import rule from '../fixtures/rule.json'
 
 describe("prepareRule", () => {
   context('update', () => {
-    const result = prepareForUpdate(rule);
+    const result = prepareForUpdate([rule, rule]);
 
     it('selects fields', () => {
       expect(result).to.have.all.keys(['name', 'script', 'enabled', 'order']);

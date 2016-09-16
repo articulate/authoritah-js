@@ -1,4 +1,4 @@
-import removals from '../../../src/apply/diff/removals'
+import removals from '../../../src/apply/diffFunctions/removals'
 
 const local = [
   { name: '1234', attr: 2 },

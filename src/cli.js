@@ -63,7 +63,7 @@ function addApplyCommand(cli) {
     .option('-e, --env <env>', "Auth0 env to run against")
     .option('-k, --key <key>', "The Auth0 domain key.")
     .option('-s, --secret <secret>', "The Auth0 domain secret.")
-    .option('-d, --dry-run', "Perform a dry run, outputting the diff that will be applied.")
+    .option('-d, --dry-run', "Perform a dry run, outputting the config that will be applied.")
     .option('-y, --yes', "Bypass confirmation step.")
     .action(applyInterface);
 

@@ -1,5 +1,5 @@
 import R from 'ramda'
-import changes from '../../../src/apply/diff/changes'
+import changes from '../../../src/apply/diffFunctions/changes'
 
 const local = [
   { name: '1234', attr: 2, bobby: "tables", fake: { once: 1 }, empty: [], hashpty: {}, doubler: [1, 2] },

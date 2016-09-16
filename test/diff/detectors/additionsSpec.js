@@ -1,4 +1,4 @@
-import additions from '../../../src/apply/diffFunctions/additions'
+import additions from '../../../src/diff/detectors/additions'
 
 const local = [
   { name: '1234', attr: 2 },

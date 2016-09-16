@@ -4,7 +4,7 @@ import inquirer from 'inquirer'
 
 import prepareAll from '../utils/prepareAll'
 
-import diff from './diff'
+import diff from '../diff/diff'
 import applyDiff from './applyDiff'
 import printDiff from './printApply'
 

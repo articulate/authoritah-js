@@ -2,9 +2,9 @@ import R from 'ramda'
 import ruleDiff from '../transformers/rules/prepareRuleForDiff'
 import connectionDiff from '../transformers/connections/prepareConnectionForDiff'
 
-import additions from './diffFunctions/additions'
-import removals from './diffFunctions/removals'
-import changes from './diffFunctions/changes'
+import additions from './detectors/additions'
+import removals from './detectors/removals'
+import changes from './detectors/changes'
 
 const COMPARE_FIELDS = {
   rules: ruleDiff,

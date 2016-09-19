@@ -4,7 +4,7 @@ import setupClient from '../utils/setupClient'
 import fetchRules from '../auth0/rules/fetchRules'
 import fetchConnections from '../auth0/connections/fetchConnections'
 import fetchClients from '../auth0/clients/fetchClients'
-import { disassociate } from '../utils/associateClientConnections'
+import disassociate from './clientConnections/disassociate'
 
 export default function prepareAll(filename, options) {
   return loadEnv(options)

@@ -6,7 +6,7 @@ import fetchRules from '../auth0/rules/fetchRules'
 import fetchConnections from '../auth0/connections/fetchConnections'
 import fetchClients from '../auth0/clients/fetchClients'
 
-import { associate } from '../utils/associateClientConnections'
+import associate from '../utils/clientConnections/associate'
 import saveRules from './saveRules'
 import saveConnections from './saveConnections'
 import saveManifest from './saveManifest'

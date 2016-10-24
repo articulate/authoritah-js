@@ -1,4 +1,5 @@
 import R from 'ramda';
 
-const prepareRuleForUpdate = R.omit(['id', 'stage']);
+const filterFields = R.omit(['id', 'stage']);
+const prepareRuleForUpdate = R.compose(filterFields, R.head);
 export default prepareRuleForUpdate;

@@ -1,5 +1,10 @@
 import R from 'ramda'
 
+import ruleChanges from '../transformers/rules/prepareRuleForUpdate'
+import ruleAdds from '../transformers/rules/prepareRuleForSave'
+import connectionChanges from '../transformers/connections/prepareConnectionForUpdate'
+import connectionAdds from '../transformers/connections/prepareConnectionForSave'
+
 const fromObj = R.flip(R.prop);
 const formatJSON  = R.curry(JSON.stringify)(R.__, null, "\t");
 
@@ -7,6 +12,11 @@ const symbols = R.flip(R.prop)({
   adds: '+ ',
   removes: '- ',
   changes: '* ',
+});
+
+const formatters = (...args) => R.path(args)({
+  rules: { adds: ruleAdds, changes: ruleChanges, removes: R.prop('name') },
+  connections: { adds: connectionAdds, changes: connectionChanges, removes: R.prop('name') },
 });
 
 const printGroup = R.curry((printers, typeDef) => {
@@ -24,8 +34,9 @@ const printGroup = R.curry((printers, typeDef) => {
     R.forEach((actionName) => {
       const diffs = fromObj(actions, actionName);
       const printer = printers(actionName);
+      const formatter = formatters(key, actionName);
 
-      R.forEach(R.compose(printer, R.concat(symbols(actionName)), formatJSON), diffs);
+      R.forEach(R.compose(printer, R.concat(symbols(actionName)), formatJSON, formatter), diffs);
     }, verbs);
   }, types);
 

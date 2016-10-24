@@ -23,7 +23,7 @@ function parallelizer(context, functions) {
   return Promise.all(R.map((fn) => fn(context), functions));
 }
 
-export default function(context) {
+export default function applyDiff(context) {
   const { diff } = context;
   const applier = R.partial(parallelizer, [context]);
 

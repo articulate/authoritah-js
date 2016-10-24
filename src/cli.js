@@ -6,6 +6,7 @@ import configInterface from './config/index'
 import dumpInterface from './dump/index'
 import applyInterface from './apply/index'
 import setupInterface from './setup/index'
+import diffInterface from './diff/index'
 
 function setupCLI(cli) {
   cli.usage('[options] <config file>')
@@ -63,9 +64,19 @@ function addApplyCommand(cli) {
     .option('-e, --env <env>', "Auth0 env to run against")
     .option('-k, --key <key>', "The Auth0 domain key.")
     .option('-s, --secret <secret>', "The Auth0 domain secret.")
-    .option('-d, --dry-run', "Perform a dry run, outputting the diff that will be applied.")
+    .option('-d, --dry-run', "Perform a dry run, outputting the config that will be applied.")
     .option('-y, --yes', "Bypass confirmation step.")
     .action(applyInterface);
+
+  return cli;
+}
+
+function addDiffCommand(cli) {
+  cli.command('diff [rules file]')
+    .option('-e, --env <env>', "Auth0 env to run against")
+    .option('-k, --key <key>', "The Auth0 domain key.")
+    .option('-s, --secret <secret>', "The Auth0 domain secret.")
+    .action(diffInterface);
 
   return cli;
 }
@@ -81,6 +92,7 @@ exports.cli = (args) => {
     .then(addJwtCommand)
     .then(addDumpCommand)
     .then(addApplyCommand)
+    .then(addDiffCommand)
     .then(cli => cli.parse(args))
     .catch(console.error);
 }

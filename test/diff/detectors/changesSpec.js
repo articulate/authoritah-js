@@ -34,7 +34,7 @@ const filter = R.pick(['attr']);
 
 describe("diffing for changes", () => {
   const result = changes(filter)(local, server);
-  const [rhs, lhs] = result[0];
+  const [lhs, rhs] = result[0];
   const splits = { left: [lhs, local[0]], right: [rhs, server[0]] };
 
   it('returns only filtered fields changed', () => {
@@ -45,31 +45,31 @@ describe("diffing for changes", () => {
     expect(rhs).to.have.all.keys(...R.keys(lhs));
   });
 
-  R.mapObjIndexed(([value, cfg], side) => {
+  R.mapObjIndexed(([result, cfg], side) => {
     context(`${side} side`, () => {
       it(`uses ${side} value for conflicts`, () => {
-        expect(value.attr).to.equal(cfg.attr);
+        expect(result.attr).to.equal(cfg.attr);
       });
 
       it('merges deeply from both', () => {
-        expect(value.fake).to.eql({ once: 1, twice: 2 })
+        expect(result.fake).to.eql({ once: 1, twice: 2 })
       });
 
       it('dedups arrays with duplicate items', () => {
-        expect(value.doubler).to.eql([1, 2])
+        expect(result.doubler).to.eql([1, 2])
       });
 
       it('merges when missing entirely', () => {
-        expect(value.dingo).to.eql({ one: 2 });
+        expect(result.dingo).to.eql({ one: 2 });
       });
 
       context('empty', () => {
         it('does not merge array', () => {
-          expect(value.empty).to.eql(cfg.empty);
+          expect(result.empty).to.eql(cfg.empty);
         });
 
         it('does not merge hash', () => {
-          expect(value.hashpty).to.eql(cfg.hashpty);
+          expect(result.hashpty).to.eql(cfg.hashpty);
         });
 
       });

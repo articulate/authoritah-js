@@ -10,8 +10,8 @@ import diffInterface from './diff/index'
 
 function setupCLI(cli) {
   cli.usage('[options] <config file>')
-    .option('-C, --no-color', "Disable color output");
-
+    .option('-C, --no-color', "Disable color output")
+    .option('-y, --yes', "Bypass confirmation step.");
   return cli;
 }
 
@@ -65,7 +65,6 @@ function addApplyCommand(cli) {
     .option('-k, --key <key>', "The Auth0 domain key.")
     .option('-s, --secret <secret>', "The Auth0 domain secret.")
     .option('-d, --dry-run', "Perform a dry run, outputting the config that will be applied.")
-    .option('-y, --yes', "Bypass confirmation step.")
     .action(applyInterface);
 
   return cli;

@@ -9,8 +9,7 @@ import applyDiff from './applyDiff'
 import printDiff from './printApply'
 
 const ensure = (context) => {
-  const { config, options: { env, dryRun, yes } } = context;
-
+  const { config, options: { env, dryRun, parent: { yes = false } } } = context;
   if(yes || dryRun) { return context; }
 
   const usingEnv = config.orGet("auth0.env", env);

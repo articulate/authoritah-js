@@ -28,10 +28,10 @@ function addConfigCommand(cli) {
   cli.command('config <command> [args...]')
     .description('Manage Authoritah config variables. ' +
                  'Available commands:\n' +
-                 '\tshow\n' +
+                 '\tls\n' +
                  '\tset key=value [key=value...]\n' +
                  '\tget key [key...]\n' +
-                 '\tremove key [key...]')
+                 '\trm key [key...]')
     .action(configInterface);
 
   return cli;

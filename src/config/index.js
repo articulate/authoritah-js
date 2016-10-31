@@ -1,4 +1,4 @@
-import { partial } from 'ramda'
+import R from 'ramda'
 import loadEnv from '../utils/loadEnv'
 import say from '../utils/say'
 
@@ -25,11 +25,13 @@ const configActions = {
     }
   },
 
-  rm(args, config) {
+  rm(args, context) {
+    const { config } = context;
     config.remove(args);
   },
 
-  print(args, config) {
+  ls(_args, context) {
+    const { config } = context;
     config.print();
   },
 };
@@ -39,6 +41,6 @@ export default function index(command, args, options) {
   const { error } = say(options);
 
   return loadEnv(options)
-    .then(partial(action, [args]))
+    .then(R.partial(action, [args]))
     .catch(error);
 }

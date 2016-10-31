@@ -7,6 +7,7 @@ import dumpInterface from './dump/index'
 import applyInterface from './apply/index'
 import setupInterface from './setup/index'
 import diffInterface from './diff/index'
+import removeInterface from './remove/index'
 
 function setupCLI(cli) {
   cli.usage('[options] <config file>')
@@ -80,6 +81,17 @@ function addDiffCommand(cli) {
   return cli;
 }
 
+// Secret rule remove function for dev use
+function addRemoveCommand(cli) {
+  cli.command('rm <id>')
+    .option('-e, --env <env>', "Auth0 env to run against")
+    .option('-k, --key <key>', "The Auth0 domain key.")
+    .option('-s, --secret <secret>', "The Auth0 domain secret.")
+    .action(removeInterface);
+
+  return cli;
+}
+
 exports.cli = (args) => {
   const cli = program;
 
@@ -92,6 +104,7 @@ exports.cli = (args) => {
     .then(addDumpCommand)
     .then(addApplyCommand)
     .then(addDiffCommand)
+    .then(addRemoveCommand)
     .then(cli => cli.parse(args))
     .catch(console.error);
 }

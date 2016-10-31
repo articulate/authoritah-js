@@ -5,5 +5,7 @@ export default function saveRules(context) {
   const { rules, options: { ruleScripts } } = context;
   const saveScriptTo = saveScripts(ruleScripts);
 
-  return R.assoc('rules', R.map(saveScriptTo, rules), context);
+  const prepare = R.compose(R.sortBy(R.prop('order')), R.map(saveScriptTo));
+
+  return R.assoc('rules', prepare(rules), context);
 }

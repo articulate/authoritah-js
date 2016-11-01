@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/articulate/authoritah-js#readme",
   "dependencies": {
-    "auth0": "^2.1.0",
+    "auth0": "^2.5.0",
     "cli-color": "^1.1.0",
     "commander": "^2.9.0",
     "fs-extra": "^0.30.0",

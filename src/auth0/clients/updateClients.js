@@ -2,7 +2,7 @@ import R from 'ramda'
 import prepare from '../../transformers/clients/prepareClientForUpdate'
 import apiErrorHandler from '../../utils/apiErrorHandler'
 
-const getId = R.pick(['client_id']);
+const getId = R.compose(R.pick(['client_id']), R.head);
 export default function updateClients(context) {
   const { client, diff: { clients: { changes } }, say: { notice } } = context;
   const print = ({name}) => notice("Updated client: ", name);

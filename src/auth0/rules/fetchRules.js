@@ -4,8 +4,6 @@ const STAGES = [
   'login_success',
   'login_failure',
   'pre_authorize',
-  'user_registration',
-  'user_blocked',
 ];
 
 export default function fetchRules(context) {

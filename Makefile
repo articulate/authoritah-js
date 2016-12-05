@@ -16,7 +16,7 @@ clean:
 	make build
 
 container:
-	docker build .
+	docker build -t articulate/authoritah-js:local .
 
 release:
 	git push origin master

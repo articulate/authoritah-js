@@ -1,4 +1,4 @@
-FROM articulate/articulate-node:6
+FROM node:6
 MAINTAINER Luke van der Hoeven <plukevdh@articulate.com>
 
 RUN mkdir /opt/authoritah
